@@ -1,5 +1,6 @@
 
-/*
+/* A heirarchical index for the Frame data structure, the result of a call to
+ * Frame.groupby
  */
 function FrameIndex(frame, index){
 	this.frame = frame;
