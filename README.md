@@ -4,7 +4,7 @@ A lightweight, high performance Columnar Data Store disguised as a Data Frame
 
 # deets
 
-Interface similarity targets and inspiration come from
+Interface similarity targets and inspiration from
 
 * pandas
 * R
