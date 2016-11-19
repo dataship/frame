@@ -12,4 +12,8 @@ Interface similarity targets and inspiration come from
 * rethinkDB
 * Matlab
 
+Performance target
+
+* [datavore](https://github.com/StanfordHCI/datavore)
+
 Planned native compatibility with [feather](https://github.com/wesm/feather)
