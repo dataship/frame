@@ -1,0 +1,35 @@
+{
+  "name": "dataship-frame",
+  "version": "0.8.0",
+  "description": "A lightweight, high performance Columnar Data Store disguised as a Data Frame",
+  "main": "frame.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "test",
+    "benchmark": "browserify benchmark/*.js | testling -x $npm_config_browser"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dataship/frame.git"
+  },
+  "keywords": [
+    "dataframe",
+    "statistics",
+    "math",
+    "pandas",
+    "R"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dataship/frame/issues"
+  },
+  "homepage": "https://github.com/dataship/frame#readme",
+  "dependencies": {
+    "benchmark": "^1.0.0",
+    "microtime": "^2.0.0",
+    "tape": "^4.2.2"
+  }
+}
