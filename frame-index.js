@@ -1,4 +1,6 @@
 
+var reducers = require('./stream-reducers');
+
 /* A heirarchical index for the Frame data structure, the result of a call to
  * Frame.groupby
  */
@@ -39,8 +41,8 @@ FrameIndex.prototype.reduce = function(selector, reducer, initial){
 
 	reducer = reducer ||
 		((column.length > 0 && Object.prototype.toString.call(column[0]) == "[object Number]") ?
-			Reduce.sum :
-			Reduce.max);
+			reducers.sum :
+			reducers.max);
 
 	for(key in this.index){
 		var indeces = this.index[key];
