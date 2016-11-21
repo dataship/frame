@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "test",
-    "benchmark": "browserify benchmark/*.js | testling -x $npm_config_browser"
+    "benchmark": "browserify benchmark/*.js | testling -x $npm_config_browser",
+    "benchmark-datavore": "browserify benchmark/datavore/*.js | testling -x $npm_config_browser"
   },
   "repository": {
     "type": "git",

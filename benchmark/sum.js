@@ -11,6 +11,9 @@ function createSetup(N, K){
 		var groupCol = gen.Array.int(N, K);;
 		var valueCol = gen.Array.float(N);
 
+		// map to strings
+		groupCol = groupCol.map(i => ["a", "b", "c"][i]);
+
 		// create frame
 		var columnDict = {
 			"group-col" : groupCol,
@@ -22,7 +25,7 @@ function createSetup(N, K){
 }
 
 var N = 100000,
-	K = 20;
+	K = 3;
 
 var name = "groupby.sum: " + N + "x" + K;
 
@@ -31,8 +34,7 @@ benchtap.add(name, createSetup(N, K),function(){
 	var result = group.reduce("reduce-col");
 }, N);
 
-var N = 1000000,
-	K = 20;
+var N = 1000000;
 
 name = "groupby.sum: " + N + "x" + K;
 
