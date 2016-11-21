@@ -1,4 +1,4 @@
-var Benchtap = require('./benchtap'),
+var Benchtap = require('benchtap'),
 	Frame = require('../frame');
 
 function randomIntArray(N, K){

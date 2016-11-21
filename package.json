@@ -27,9 +27,7 @@
     "url": "https://github.com/dataship/frame/issues"
   },
   "homepage": "https://github.com/dataship/frame#readme",
-  "dependencies": {
-    "benchmark": "^1.0.0",
-    "microtime": "^2.0.0",
-    "tape": "^4.2.2"
+  "devDependencies": {
+    "benchtap": "^0.8.0"
   }
 }
