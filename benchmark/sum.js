@@ -33,7 +33,7 @@ function logTapBegin(){
 	console.log("TAP version 13");
 }
 
-function logTapEnd(length){
+function logTapEnd(){
 	console.log("\n1.." + suite.length);
 	console.log("# tests " + suite.length);
 	console.log("# pass  " + pass);
@@ -46,31 +46,18 @@ function logTapEnd(length){
 /*
  * logTapResult(event, this)
  */
-function logTapResult(event, benchmark, N){
+function logTapResult(id, name, info){
 
-	var pm = '\xb1',
-		mu = '\xb5'
-		size = benchmark.stats.sample.length;
-
-	var gflops = benchmark.hz * N / 1e9;
-
-	var info = Benchmark.formatNumber(gflops.toFixed(3)) + ' GFlops/sec ' +
-		' ' + pm + benchmark.stats.rme.toFixed(2) + '% ' +
-		' n = ' + size +
-		' ' + mu + " = " + (benchmark.stats.mean * 1000).toFixed(0) + 'ms';
-
-	//var info = "YES!";
-
-	console.log("ok " + event.currentTarget.id + " " + benchmark.name);
+	console.log("ok " + id + " " + name);
 	console.log("# " + info);
 }
 
-function logTapError(event, benchmark){
+function logTapError(id, name, error){
 
-	console.log("not ok " + event.currentTarget.id + " " +  benchmark.name);
+	console.log("not ok " + id + " " + name);
 	// show error
 	console.log("  ---");
-	console.log("  error: " + benchmark.error);
+	console.log("  error: " + error);
 	console.log("  ...");
 }
 
@@ -99,11 +86,24 @@ function createBenchmark(N, K){
 	.on('cycle', function(event) {
 	})
 	.on('complete', function(event) {
-		if(this.error){
-			logTapError(event, this);
+		var benchmark = this;
+		if(benchmark.error){
+			logTapError(event.currentTarget.id, benchmark.name, benchmark.error);
 			fail++;
 		} else {
-			logTapResult(event, this, N);
+
+			var pm = '\xb1',
+				mu = '\xb5'
+				size = benchmark.stats.sample.length;
+
+			var mflops = benchmark.hz * N / 1e6;
+
+			var info = Benchmark.formatNumber(mflops.toFixed(3)) + ' MFlops/sec ' +
+				' ' + pm + benchmark.stats.rme.toFixed(2) + '% ' +
+				' n = ' + size +
+				' ' + mu + " = " + (benchmark.stats.mean * 1000).toFixed(0) + 'ms';
+
+			logTapResult(event.currentTarget.id, benchmark.name, info);
 			pass++;
 		}
 	});
