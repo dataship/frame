@@ -21,27 +21,26 @@ function createSetup(N, K){
 		};
 
 		this.frame = new Frame(columnDict);
-		this.group = this.frame.groupby("group-col");
 	};
 }
 
 var N = 100000,
 	K = 3;
 
-var name = "sum: " + N + "x" + K;
-
+var name = "groupby.sum: " + N + "x" + K;
+/*
 benchtap.add(name, createSetup(N, K),function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
 }, N);
-
-
+*/
 var N = 1000000;
 
-name = "sum: " + N + "x" + K;
+name = "groupby.sum: " + N + "x" + K;
 
 benchtap.add(name, createSetup(N, K),function(){
-	var result = this.group.reduce("reduce-col");
+	var group = this.frame.groupby("group-col");
+	var result = group.reduce("reduce-col");
 }, N);
 
 benchtap.run();
