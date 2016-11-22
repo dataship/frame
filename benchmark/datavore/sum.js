@@ -8,7 +8,7 @@ var benchtap = new Benchtap();
 function createSetup(N, K){
 	return function(event){
 		// generate data
-		var groupCol = gen.Array.int(N, K);;
+		var groupCol = gen.Array.int(N, K);
 		var valueCol = gen.Array.float(N);
 
 		groupCol = groupCol.map(i => ["a", "b", "c"][i]);
