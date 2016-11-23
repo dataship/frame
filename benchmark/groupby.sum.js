@@ -5,14 +5,15 @@ var Benchtap = require('benchtap'),
 var benchtap = new Benchtap();
 
 
-function createSetup(N, K){
+function createSetup(N, K, useStrings){
 	return function(event){
 		// generate data
 		var groupCol = gen.Array.int(N, K);
 		var valueCol = gen.Array.int(N, 100);
 
 		// map to strings
-		groupCol = groupCol.map(i => ["a", "b", "c"][i]);
+		if(useStrings)
+			groupCol = groupCol.map(i => ["a", "b", "c"][i]);
 
 		// create frame
 		var columnDict = {
@@ -28,12 +29,12 @@ var N = 100000,
 	K = 3;
 
 var name = "groupby.sum: " + N + "x" + K;
-/*
+
 benchtap.add(name, createSetup(N, K),function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
 }, N);
-*/
+
 var N = 1000000;
 
 name = "groupby.sum: " + N + "x" + K;
