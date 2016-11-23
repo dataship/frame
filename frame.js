@@ -148,12 +148,14 @@ Frame.prototype.groupby = function(selector){
 		throw new Error("Couldn't find a column named '" + selector + "'");
 
 	var column = this.cols[selector],
-		value;
+		value,
+		arr;
 
 	for(var i = 0; i < column.length; i++){
 		value = column[i];
-		if(value in index){
-			index[value].push(i);
+		arr = index[value];
+		if(arr !== undefined){
+			arr[arr.length] = i;
 		} else {
 			index[value] = [i];
 		}
