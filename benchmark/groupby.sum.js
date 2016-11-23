@@ -35,11 +35,25 @@ benchtap.add(name, createSetup(N, K),function(){
 	var result = group.reduce("reduce-col");
 }, N);
 
+var name = "groupby.sum (strings) : " + N + "x" + K;
+
+benchtap.add(name, createSetup(N, K, true),function(){
+	var group = this.frame.groupby("group-col");
+	var result = group.reduce("reduce-col");
+}, N);
+
 var N = 1000000;
 
 name = "groupby.sum: " + N + "x" + K;
 
 benchtap.add(name, createSetup(N, K),function(){
+	var group = this.frame.groupby("group-col");
+	var result = group.reduce("reduce-col");
+}, N);
+
+name = "groupby.sum (strings): " + N + "x" + K;
+
+benchtap.add(name, createSetup(N, K, true),function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
 }, N);
