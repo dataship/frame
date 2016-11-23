@@ -31,8 +31,7 @@ var N = 100000,
 var name = "sum: " + N + "x" + K;
 
 benchtap.add(name, createSetup(N, K),function(){
-	var group = this.frame.groupby("group-col");
-	var result = group.reduce("reduce-col");
+	var result = this.group.reduce("reduce-col");
 }, N);
 
 
