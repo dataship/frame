@@ -1,8 +1,8 @@
-var Benchtap = require('benchtap'),
+var benchtap = require('benchtap'),
 	gen = require('../generate'),
 	Frame = require('../frame');
 
-var benchtap = new Benchtap();
+//var benchtap = new Benchtap();
 
 
 function createSetup(N, K){
@@ -22,6 +22,7 @@ function createSetup(N, K){
 
 		this.frame = new Frame(columnDict);
 		this.group = this.frame.groupby("group-col");
+		console.log("setup done");
 	};
 }
 
@@ -30,11 +31,13 @@ var N = 100000,
 
 var name = "sum: " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K),function(){
+benchtap(name, {"operations": N}, createSetup(N, K),function(){
 	var result = this.group.reduce("reduce-col");
-}, N);
+	console.log(result);
+});
 
 
+/*
 var N = 1000000;
 
 name = "sum: " + N + "x" + K;
@@ -44,3 +47,4 @@ benchtap.add(name, createSetup(N, K),function(){
 }, N);
 
 benchtap.run();
+*/
