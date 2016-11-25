@@ -15,8 +15,4 @@ test("groupby.sum", function(t){
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
 
-	/*
-	t.pass("this is how we do it.");
-	t.comment("extra stuff: 3.1415");
-	*/
 });
