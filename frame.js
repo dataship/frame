@@ -97,7 +97,13 @@ function Frame(data){
 		}
 
 		// all checks pass use data as columns
-		this.cols = JSON.parse(JSON.stringify(data));
+		for(var key in data){
+			column = data[key];
+
+			// copy column data
+			this.cols[key] = column.slice(0);
+		}
+
 
 	} else if(isarray(data)) {
 		// array, check it's elements
