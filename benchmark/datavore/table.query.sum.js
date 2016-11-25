@@ -1,9 +1,6 @@
-var Benchtap = require('benchtap'),
+var benchtap = require('benchtap'),
 	gen = require('../../generate'),
 	dv = require('./datavore');
-
-var benchtap = new Benchtap();
-
 
 function createSetup(N, K){
 	return function(event){
@@ -43,13 +40,11 @@ var N = 100000,
 
 var name = "table.query.sum: " + N + "x" + K;
 
-//benchtap.add(name, createSetup(N, K), test, N);
+benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);
+
 
 var N = 1000000;
 
-
 name = "table.query.sum: " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K), test, N);
-
-benchtap.run();
+benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);

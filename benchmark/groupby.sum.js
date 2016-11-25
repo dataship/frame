@@ -1,9 +1,6 @@
-var Benchtap = require('benchtap'),
+var benchtap = require('benchtap'),
 	gen = require('../generate'),
 	Frame = require('../frame');
-
-var benchtap = new Benchtap();
-
 
 function createSetup(N, K, useStrings){
 	return function(event){
@@ -30,32 +27,30 @@ var N = 100000,
 
 var name = "groupby.sum: " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K),function(){
+benchtap(name, {"operations" :  2*N}, createSetup(N, K), function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
-}, 2*N);
+});
 
 var name = "groupby.sum (strings) : " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K, true),function(){
+benchtap(name, {"operations" :  2*N}, createSetup(N, K, true), function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
-}, 2*N);
+});
 
 var N = 1000000;
 
 name = "groupby.sum: " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K),function(){
+benchtap(name, {"operations" :  2*N}, createSetup(N, K), function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
-}, 2*N);
+});
 
 name = "groupby.sum (strings): " + N + "x" + K;
 
-benchtap.add(name, createSetup(N, K, true),function(){
+benchtap(name, {"operations" :  2*N}, createSetup(N, K, true), function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
-}, 2*N);
-
-benchtap.run();
+});
