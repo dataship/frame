@@ -32,15 +32,14 @@ benchtap(name, {"operations" :  2*N}, createSetup(N, K), function(){
 	var result = group.reduce("reduce-col");
 });
 
-var name = "groupby.sum (strings) : " + N + "x" + K;
+name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, true), function(){
 	var group = this.frame.groupby("group-col");
 	var result = group.reduce("reduce-col");
 });
 
-var N = 1000000;
-
+N = 1000000;
 name = "groupby.sum: " + N + "x" + K;
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K), function(){
@@ -48,7 +47,7 @@ benchtap(name, {"operations" :  2*N}, createSetup(N, K), function(){
 	var result = group.reduce("reduce-col");
 });
 
-name = "groupby.sum (strings): " + N + "x" + K;
+name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, true), function(){
 	var group = this.frame.groupby("group-col");
