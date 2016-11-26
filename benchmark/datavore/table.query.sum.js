@@ -2,13 +2,14 @@ var benchtap = require('benchtap'),
 	gen = require('../../generate'),
 	dv = require('./datavore');
 
-function createSetup(N, K){
+function createSetup(N, K, useStrings){
 	return function(event){
 
 		var groupCol = gen.Array.int(N, K);
 		var valueCol = gen.Array.int(N, 100);
 
-		//groupCol = groupCol.map(i => ["a", "b", "c"][i]);
+		if(useStrings)
+			groupCol = groupCol.map(i => ["a", "b", "c"][i]);
 
 		// create table
 		this.table = dv.table([
@@ -39,12 +40,16 @@ var N = 100000,
 	K = 3;
 
 var name = "table.query.sum: " + N + "x" + K;
-
 benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);
+
+name += " (strings)";
+benchtap(name, {"operations" : 2*N}, createSetup(N, K, true), test);
 
 
 var N = 1000000;
 
 name = "table.query.sum: " + N + "x" + K;
-
 benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);
+
+name += " (strings)";
+benchtap(name, {"operations" : 2*N}, createSetup(N, K, true), test);
