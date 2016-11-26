@@ -27,7 +27,7 @@ function test(){
 var N = 100000,
 	K = 3;
 
-var name = "table.query.sum: " + N + "x" + K;
+var name = "create: " + N + "x" + K;
 benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);
 
 name += " (strings)";
@@ -36,7 +36,7 @@ benchtap(name, {"operations" : 2*N}, createSetup(N, K, true), test);
 // 1 million data points/rows
 var N = 1000000;
 
-name = "table.query.sum: " + N + "x" + K;
+name = "create: " + N + "x" + K;
 benchtap(name, {"operations" : 2*N}, createSetup(N, K), test);
 
 name += " (strings)";
