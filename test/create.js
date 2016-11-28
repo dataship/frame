@@ -54,7 +54,7 @@ test("access column as property", function(t){
 });
 
 test("only columns are enumerable", function(t){
-	t.plan(1);
+	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
 	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
 
@@ -63,6 +63,15 @@ test("only columns are enumerable", function(t){
 		"b" : b
 	});
 
+	var expected = ["a", "b"];
 
-	t.equals(JSON.stringify(Object.keys(frame)), JSON.stringify(["a", "b"]));
+	t.equals(JSON.stringify(Object.keys(frame)), JSON.stringify(expected));
+
+	var found = [];
+
+	for(name in frame){
+		found.push(name);
+	}
+
+	t.equals(JSON.stringify(found), JSON.stringify(expected));
 });
