@@ -154,32 +154,40 @@ function addColumn(frame, name){
 
 module.exports = Frame;
 
-Frame.prototype.labels = function(){
-	return Object.keys(this._cols);
-}
+/*
+ */
+Object.defineProperty(Frame.prototype, "labels", {
+	enumerable: false,
+	get : function(){
+		return Object.keys(this._cols);
+	}
+});
 
 /*
  * group the data in the frame by a selector or set of selectors
  */
-Frame.prototype.groupby = function(selector){
-	var index = {};
+Object.defineProperty(Frame.prototype, "groupby", {
+	enumerable: false,
+	value : function(selector){
+		var index = {};
 
-	if(!(selector in this._cols))
-		throw new Error("Couldn't find a column named '" + selector + "'");
+		if(!(selector in this._cols))
+			throw new Error("Couldn't find a column named '" + selector + "'");
 
-	var column = this._cols[selector],
-		value,
-		arr;
+		var column = this._cols[selector],
+			value,
+			arr;
 
-	for(var i = 0; i < column.length; i++){
-		value = column[i];
-		arr = index[value];
-		if(arr !== undefined){
-			arr[arr.length] = i;
-		} else {
-			index[value] = [i];
+		for(var i = 0; i < column.length; i++){
+			value = column[i];
+			arr = index[value];
+			if(arr !== undefined){
+				arr[arr.length] = i;
+			} else {
+				index[value] = [i];
+			}
 		}
-	}
 
-	return new FrameIndex(this, index);
-}
+		return new FrameIndex(this, index);
+	}
+});
