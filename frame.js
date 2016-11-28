@@ -64,12 +64,14 @@ function Frame(data){
 	// f.constructor.name return "Frame"
 	if(!(this instanceof Frame)) return new Frame(data);
 
-	this.cols = {};
+	Object.defineProperty(this, "_cols", {
+		"enumerable" : false,
+		"value" : {}
+	});
 
 	// do we have input?
 	if(data == null){
 		// no, just return an empty Frame
-		this.cols = {};
 		return;
 	}
 
@@ -101,14 +103,13 @@ function Frame(data){
 			column = data[key];
 
 			// copy column data
-			this.cols[key] = column.slice(0);
+			this._cols[key] = column.slice(0);
 		}
 
 
 	} else if(isarray(data)) {
 		// array, check it's elements
 		if(data.length == 0){
-			this.cols = {};
 			return;
 		}
 
@@ -125,23 +126,37 @@ function Frame(data){
 				// yes
 				for(key in columns){
 					if(key in row)
-						columns[key].push(row[key])
+						columns[key][i] = row[key];
 					else
-						columns[key].push(null);
+						columns[key][i] = null;
 				}
 			} else {
 				// no, invalid data
 				throw new Exception("Invalid data, must be array of rows or dict of columns");
 			}
 		}
-		this.cols = columns;
+		this._cols = columns;
 	}
+
+	// expose columns as properties
+	for(name in this._cols){
+		addColumn(this, name);
+	}
+}
+
+function addColumn(frame, name){
+	Object.defineProperty(frame, name, {
+		enumerable : true,
+		get: function(){
+			return frame._cols[name];
+		}
+	});
 }
 
 module.exports = Frame;
 
 Frame.prototype.labels = function(){
-	return Object.keys(this.cols);
+	return Object.keys(this._cols);
 }
 
 /*
@@ -150,10 +165,10 @@ Frame.prototype.labels = function(){
 Frame.prototype.groupby = function(selector){
 	var index = {};
 
-	if(!(selector in this.cols))
+	if(!(selector in this._cols))
 		throw new Error("Couldn't find a column named '" + selector + "'");
 
-	var column = this.cols[selector],
+	var column = this._cols[selector],
 		value,
 		arr;
 

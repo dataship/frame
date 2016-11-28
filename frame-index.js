@@ -30,11 +30,11 @@ FrameIndex.prototype.count = function(){
 }
 
 FrameIndex.prototype.reduce = function(selector, reducer, initial){
-	if(!(selector in this.frame.cols))
+	if(!(selector in this.frame._cols))
 		throw new Error("Couldn't find a column named '" + selector + "'");
 
 
-	var column = this.frame.cols[selector],
+	var column = this.frame._cols[selector],
 		result = [],
 		index,
 		start;
