@@ -114,9 +114,8 @@ function Frame(data){
 		}
 
 		var row;
-		var columns = {};
 		for(key in data[0]){
-			columns[key] = [];
+			this._cols[key] = [];
 		}
 		for(var i = 0; i < data.length; i++){
 			row = data[i];
@@ -124,18 +123,18 @@ function Frame(data){
 			// are the rows objects?
 			if(isobject(row)){
 				// yes
-				for(key in columns){
+				for(key in this._cols){
 					if(key in row)
-						columns[key][i] = row[key];
+						this._cols[key][i] = row[key];
 					else
-						columns[key][i] = null;
+						this._cols[key][i] = null;
 				}
 			} else {
 				// no, invalid data
 				throw new Exception("Invalid data, must be array of rows or dict of columns");
 			}
 		}
-		this._cols = columns;
+
 	}
 
 	// expose columns as properties
