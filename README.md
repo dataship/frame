@@ -2,9 +2,17 @@
 
 A lightweight, high performance Columnar Data Store disguised as a Data Frame
 
-# deets
+## tests
+`npm run test`
 
-Interface similarity targets and inspiration from
+## benchmarks
+`npm run benchmark`
+
+# design goals and inspiration
+
+ * compatibility with [feather](https://github.com/wesm/feather)
+
+## interface
 
 * pandas
 * R
@@ -12,8 +20,6 @@ Interface similarity targets and inspiration from
 * rethinkDB
 * Matlab
 
-Performance target
+## performance
 
 * [datavore](https://github.com/StanfordHCI/datavore)
-
-Planned native compatibility with [feather](https://github.com/wesm/feather)
