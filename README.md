@@ -8,22 +8,6 @@ A lightweight, high performance Columnar Data Store disguised as a Data Frame
 ## benchmarks
 `npm run benchmark`
 
-# design goals and inspiration
-
- * compatibility with [feather](https://github.com/wesm/feather)
-
-## interface
-
-* pandas
-* R
-* Linq
-* rethinkDB
-* Matlab
-
-## performance
-
-* [datavore](https://github.com/StanfordHCI/datavore)
-
 ### results
 
 `groupby` on 1 million rows in < 100ms
@@ -57,3 +41,19 @@ ok 10 : n = 39, µ = 36ms, ops = 27.864 M/sec ±0.28%
 
 # ok
 ```
+
+# design goals and inspiration
+
+ * compatibility with [feather](https://github.com/wesm/feather)
+
+## interface
+
+* pandas
+* R
+* Linq
+* rethinkDB
+* Matlab
+
+## performance
+
+* [datavore](https://github.com/StanfordHCI/datavore)
