@@ -1,6 +1,8 @@
 
 var reducers = require('./stream-reducers');
 
+function isobject(obj){ return Object.prototype.toString.call(obj) === "[object Object]";}
+
 /* A heirarchical index for the Frame data structure, the result of a call to
  * Frame.groupby
  */
@@ -13,9 +15,13 @@ module.exports = FrameIndex;
 
 /*
  */
-FrameIndex.prototype.labels = function(){
+FrameIndex.prototype.columns = function(){
+	return this.frame.columns();
+};
+
+FrameIndex.prototype.groups = function(){
 	return Object.keys(this.index);
-}
+};
 
 /* return a summary of the number of items in each group
  */
@@ -27,7 +33,40 @@ FrameIndex.prototype.count = function(){
 	}
 
 	return counts;
-}
+};
+FrameIndex.prototype.sum = function(selector) {
+		return this.reduce(selector, reducers.sum);
+};
+
+FrameIndex.prototype.countmulti = function(){
+	var reduced = {};
+	var index = this.index;
+
+	// depth first iteration
+	var todo = [[index, reduced]];
+
+	var result;
+	while (todo.length > 0){
+		n = todo.pop();// object
+		index = n[0];
+		result = n[1];
+
+		var c;
+		for(key in index){ // keys in object
+			c = index[key];
+
+			if(isobject(c)){
+				result[key] = {};
+				todo.push([c, result[key]]);
+			} else {
+				result[key] = c.length; // reduce
+			}
+		}
+	}
+
+	return reduced;
+
+};
 
 FrameIndex.prototype.reduce = function(selector, reducer, initial){
 	if(!(selector in this.frame._cols))
@@ -67,4 +106,4 @@ FrameIndex.prototype.reduce = function(selector, reducer, initial){
 	}
 
 	return result;
-}
+};

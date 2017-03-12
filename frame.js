@@ -17,8 +17,11 @@ function isdate(obj){ return Object.prototype.toString.call(obj) === "[object Da
  * Interface similarity targets and inspiration:
  * pandas, R, Linq, rethinkDB, Matlab
  *
+ * column names:
+ * columns.values.tolist(), colnames(f),
+ *
  * aggregation:
- *	groupby, , ,
+ * groupby, , ,
  *
  * filtering:
  *
@@ -53,7 +56,7 @@ function isdate(obj){ return Object.prototype.toString.call(obj) === "[object Da
  *
  *	// an object (dict) mapping column names to arrays of values
  *	columns =
- 	{
+	 {
 		"name" : ["Finn", "Jake", "Simon", "Bonnibel", "Marceline"],
 		"age" : [16, 32, 1043, 827, 1004],
 		"title" : ["Finn the Human", "Jake the Dog", "Ice King", "Princess Bubblegum", "Marceline the Vampire Queen"]
@@ -63,6 +66,8 @@ function isdate(obj){ return Object.prototype.toString.call(obj) === "[object Da
 function Frame(data){
 	// f.constructor.name return "Frame"
 	if(!(this instanceof Frame)) return new Frame(data);
+
+	this[Symbol.toStringTag] = 'Frame';
 
 	Object.defineProperty(this, "_cols", {
 		"enumerable" : false,
@@ -85,7 +90,7 @@ function Frame(data){
 
 			// are the items arrays?
 			if(isarray(column)){
-				// yes, check their length
+				// yes, check for consistent lengths
 
 				if(length == null){
 					length = column.length;
@@ -103,6 +108,7 @@ function Frame(data){
 			column = data[key];
 
 			// copy column data
+			// TODO: convert to TypedArrays here, if necessary and possible
 			this._cols[key] = column.slice(0);
 		}
 
@@ -142,7 +148,7 @@ function Frame(data){
 		addColumn(this, name);
 	}
 }
-
+// internal function for exposing a data column as a property on the Frame
 function addColumn(frame, name){
 	Object.defineProperty(frame, name, {
 		enumerable : true,
@@ -151,12 +157,18 @@ function addColumn(frame, name){
 		}
 	});
 }
-
+/*
+// alternate syntax for toStringTag
+get [Symbol.toStringTag]() {
+	return 'Validator';
+	}
+*/
 module.exports = Frame;
 
 /*
+	Get column names
  */
-Object.defineProperty(Frame.prototype, "labels", {
+Object.defineProperty(Frame.prototype, "columns", {
 	enumerable: false,
 	get : function(){
 		return Object.keys(this._cols);
@@ -185,6 +197,62 @@ Object.defineProperty(Frame.prototype, "groupby", {
 				arr[arr.length] = i;
 			} else {
 				index[value] = [i];
+			}
+		}
+
+		return new FrameIndex(this, index);
+	}
+});
+
+
+Object.defineProperty(Frame.prototype, "groupbymulti", {
+	enumerable: false,
+	value : function(selectors){
+		var index = {};
+
+		if (selectors.length == 0) return index;
+
+		var selector = selectors[0];
+
+		if(!(selector in this._cols))
+			throw new Error("Couldn't find a column named '" + selector + "'");
+
+		var N = this._cols[selector].length;
+		for(var i = 0; i < N; i++){
+
+			var path = [];
+			// compute distinct values for group columns describing the bin for current row
+			for (var j = 0; j < selectors.length; j++){
+				selector = selectors[j];
+
+				if(!(selector in this._cols))
+					throw new Error("Couldn't find a column named '" + selector + "'");
+
+				var column = this._cols[selector];
+
+				path[path.length] = column[i];
+			}
+
+			// descend hierarchy of distinct group values to the correct leaf
+			var level = index;
+			for(var j = 0; j < path.length - 1; j++){
+
+				key = path[j];
+				next = level[key]
+				if(next == null){
+					next = {};
+					level[key] = next;
+				}
+				level = next
+			}
+
+			// update array of row indeces stored in leaf
+			key = path[path.length - 1];
+			var arr = level[key];
+			if(arr == null){
+				level[key] = [i];
+			} else {
+				arr[arr.length] = i;
 			}
 		}
 
