@@ -66,10 +66,15 @@ FrameIndex.prototype.countmulti = function(){
 };
 
 FrameIndex.prototype.sum = function(selector) {
-		return this.reduce(selector, reducers.sum);
+	return this.reduce(selector, reducers.sum);
 };
 
 FrameIndex.prototype.summulti = function(selector){
+	return this.reducemulti(selector, reducers.sum);
+};
+
+FrameIndex.prototype.reducemulti = function(selector, reducer, initial){
+
 	var reduced = {};
 	var index = this.index;
 	var column = this.frame._cols[selector];
@@ -92,7 +97,7 @@ FrameIndex.prototype.summulti = function(selector){
 				todo.push([c, result[key]]);
 			} else {
 				var indices = c;
-				var value = indexreduce(column, indices, reducers.sum);
+				var value = indexreduce(column, indices, reducer, initial);
 
 				result[key] = value; // reduce
 			}
