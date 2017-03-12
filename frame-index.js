@@ -34,9 +34,6 @@ FrameIndex.prototype.count = function(){
 
 	return counts;
 };
-FrameIndex.prototype.sum = function(selector) {
-		return this.reduce(selector, reducers.sum);
-};
 
 FrameIndex.prototype.countmulti = function(){
 	var reduced = {};
@@ -68,6 +65,69 @@ FrameIndex.prototype.countmulti = function(){
 
 };
 
+FrameIndex.prototype.sum = function(selector) {
+		return this.reduce(selector, reducers.sum);
+};
+
+FrameIndex.prototype.summulti = function(selector){
+	var reduced = {};
+	var index = this.index;
+	var column = this.frame._cols[selector];
+
+	// depth first iteration
+	var todo = [[index, reduced]];
+
+	var result;
+	while (todo.length > 0){
+		n = todo.pop();// object
+		index = n[0];
+		result = n[1];
+
+		var c;
+		for(key in index){ // keys in object
+			c = index[key];
+
+			if(isobject(c)){
+				result[key] = {};
+				todo.push([c, result[key]]);
+			} else {
+				var indices = c;
+				var value = indexreduce(column, indices, reducers.sum);
+
+				result[key] = value; // reduce
+			}
+		}
+	}
+
+	return reduced;
+
+};
+/* reduce a subset of an array given by a set of indices */
+function indexreduce(arr, indices, reducer, initial){
+
+	var start,
+		value;
+
+	if(initial !== void(0)){
+		start = 0;
+		value = initial;
+	} else if(indices.length > 0) {
+		start = 1;
+		value = arr[indices[0]];
+	} else {
+		start = 0;
+		value = 0;
+	}
+
+	for(var i = start; i < indices.length; i++){
+		index = indices[i];
+		value = reducer(value, arr[index], i);
+	}
+
+	return value;
+
+}
+
 FrameIndex.prototype.reduce = function(selector, reducer, initial){
 	if(!(selector in this.frame._cols))
 		throw new Error("Couldn't find a column named '" + selector + "'");
@@ -84,24 +144,11 @@ FrameIndex.prototype.reduce = function(selector, reducer, initial){
 			reducers.max);
 
 	for(key in this.index){
-		var indeces = this.index[key];
+		var indices = this.index[key];
 		var value;
 
-		if(initial !== void(0)){
-			start = 0;
-			value = initial;
-		} else if(indeces.length > 0) {
-			start = 1;
-			value = column[indeces[0]];
-		} else {
-			start = 0;
-			value = 0;
-		}
+		value = indexreduce(column, indices, reducer, initial);
 
-		for(var i = start; i < indeces.length; i++){
-			index = indeces[i];
-			value = reducer(value, column[index], i);
-		}
 		result.push(value);
 	}
 

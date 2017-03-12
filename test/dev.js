@@ -112,36 +112,11 @@ test("groupbymulti", function(t){
 
 
 	var g = frame.groupbymulti(["id_0", "id_1"]);
-	//var actual = g.count();
 
 	t.equals(JSON.stringify(g.index), JSON.stringify(expected));
 });
-test("groupbymulti", function(t){
-	t.plan(1);
-	var frame = new Frame({
-		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
-		"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
-		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
-	});
 
-	var expected = {
-		"0" : {
-			"0" : [0, 1, 5, 7],
-			"1" : [2]
-		},
-		"1" : {
-			"0" : [4],
-			"1" : [3, 6, 8]
-		}
-	};
-
-
-	var g = frame.groupbymulti(["id_0", "id_1"]);
-	//var actual = g.count();
-
-	t.equals(JSON.stringify(g.index), JSON.stringify(expected));
-});
-test("groupbymulti", function(t){
+test("groupbymulti.count", function(t){
 	t.plan(1);
 	var frame = new Frame({
 		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
@@ -163,6 +138,32 @@ test("groupbymulti", function(t){
 
 	var g = frame.groupbymulti(["id_0", "id_1"]);
 	var actual = g.countmulti();
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
+test("groupbymulti.sum", function(t){
+	t.plan(1);
+	var frame = new Frame({
+		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
+		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	var expected = {
+		"0" : {
+			"0" : 8,//[0, 1, 5, 7], 1 + 2 + 3 + 2
+			"1" : 2//[2]
+		},
+		"1" : {
+			"0" : 1,//[4],
+			"1" : 8//[3, 6, 8] 3 + 4 + 1
+		}
+	};
+
+
+	var g = frame.groupbymulti(["id_0", "id_1"]);
+	var actual = g.summulti("value");
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
