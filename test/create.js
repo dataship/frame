@@ -75,3 +75,15 @@ test("only columns are enumerable", function(t){
 
 	t.equals(JSON.stringify(found), JSON.stringify(expected));
 });
+
+test("Symbol.toStringTag correctly overridden", function(t){
+	t.plan(1);
+	var frame = new Frame({
+		"a" : [0],
+		"b" : [1]
+	});
+
+	var expected = "[object Frame]";
+
+	t.equals(Object.prototype.toString.call(frame), expected);
+});
