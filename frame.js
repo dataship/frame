@@ -212,25 +212,24 @@ Object.defineProperty(Frame.prototype, "groupbymulti", {
 
 		if (selectors.length == 0) return index;
 
-		var selector = selectors[0];
+		var columns = Array(selectors.length);
+		for (var m = 0; m < selectors.length; m++){
+			selector = selectors[m];
 
-		if(!(selector in this._cols))
-			throw new Error("Couldn't find a column named '" + selector + "'");
+			if(!(selector in this._cols))
+				throw new Error("Couldn't find a column named '" + selector + "'");
 
-		var N = this._cols[selector].length;
+			columns[m] = this._cols[selector];
+		}
+
+		var N = columns[0].length;
+		var path = Array(columns.length);
 		for(var i = 0; i < N; i++){
 
-			var path = [];
 			// compute distinct values for group columns describing the bin for current row
-			for (var j = 0; j < selectors.length; j++){
-				selector = selectors[j];
-
-				if(!(selector in this._cols))
-					throw new Error("Couldn't find a column named '" + selector + "'");
-
-				var column = this._cols[selector];
-
-				path[path.length] = column[i];
+			for (var m = 0; m < columns.length; m++){
+				var column = columns[m];
+				path[m] = column[i];
 			}
 
 			// descend hierarchy of distinct group values to the correct leaf
@@ -246,7 +245,7 @@ Object.defineProperty(Frame.prototype, "groupbymulti", {
 				level = next
 			}
 
-			// update array of row indeces stored in leaf
+			// update array of row indices stored in leaf
 			key = path[path.length - 1];
 			var arr = level[key];
 			if(arr == null){
