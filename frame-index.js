@@ -79,7 +79,12 @@ FrameIndex.prototype.reducemulti = function(selector, reducer, initial){
 	var index = this.index;
 	var column = this.frame._cols[selector];
 
-	// depth first iteration
+	reducer = reducer ||
+		((column.length > 0 && Object.prototype.toString.call(column[0]) == "[object Number]") ?
+			reducers.sum :
+			reducers.max);
+
+	// depth first traversal
 	var todo = [[index, reduced]];
 
 	var result;
@@ -99,7 +104,7 @@ FrameIndex.prototype.reducemulti = function(selector, reducer, initial){
 				var indices = c;
 				var value = indexreduce(column, indices, reducer, initial);
 
-				result[key] = value; // reduce
+				result[key] = value;
 			}
 		}
 	}
@@ -107,12 +112,16 @@ FrameIndex.prototype.reducemulti = function(selector, reducer, initial){
 	return reduced;
 
 };
-/* reduce a subset of an array given by a set of indices */
+/* reduce a subset of an array given by a set of indices using a supplied
+   reducing function.
+ */
 function indexreduce(arr, indices, reducer, initial){
 
 	var start,
 		value;
 
+	// chose initial values and start of loop based on number of inputs and
+	// supplied initial value
 	if(initial !== void(0)){
 		start = 0;
 		value = initial;
