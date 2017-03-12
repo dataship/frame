@@ -112,10 +112,11 @@ FrameIndex.prototype.reducemulti = function(selector, reducer, initial){
 	return reduced;
 
 };
+
 /* reduce a subset of an array given by a set of indices using a supplied
    reducing function.
  */
-function indexreduce(arr, indices, reducer, initial){
+function indexreduce(column, indices, reducer, initial){
 
 	var start,
 		value;
@@ -127,7 +128,7 @@ function indexreduce(arr, indices, reducer, initial){
 		value = initial;
 	} else if(indices.length > 0) {
 		start = 1;
-		value = arr[indices[0]];
+		value = column[indices[0]];
 	} else {
 		start = 0;
 		value = 0;
@@ -135,7 +136,7 @@ function indexreduce(arr, indices, reducer, initial){
 
 	for(var i = start; i < indices.length; i++){
 		index = indices[i];
-		value = reducer(value, arr[index], i);
+		value = reducer(value, column[index], i);
 	}
 
 	return value;
