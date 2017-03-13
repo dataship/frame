@@ -35,10 +35,10 @@ import numpy as np
 import binary_matrix
 
 
-EXTENSION = ".f32"
+EXTENSION = ".i32"
 
 def create_column(N, M):
-	return np.random.randint(0, M, N)
+	return np.random.randint(0, M, N, dtype='int32')
 
 def write_result(result, location):
 	"""write a dict to a file as a json document"""
