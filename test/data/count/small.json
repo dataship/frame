@@ -1,0 +1,14 @@
+[
+	{"N" : 10000,
+		"id" : [{"M" : 3, "strings" : false}, {"M" : 3, "strings" : false}],
+		"value" : [{"M" : 100}, {"M" : 100}]
+	},
+	{"N" : 100000,
+		"id" : [{"M" : 3, "strings" : false}, {"M" : 3, "strings" : false}],
+		"value" : [{"M" : 100}, {"M" : 100}]
+	},
+	{"N" : 1000000,
+		"id" : [{"M" : 3, "strings" : false}, {"M" : 3, "strings" : false}],
+		"value" : [{"M" : 100}, {"M" : 100}]
+	}
+]
