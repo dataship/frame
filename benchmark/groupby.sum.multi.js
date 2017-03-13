@@ -33,13 +33,13 @@ function createSetup(N, K, M, useStrings){
 
 var N = 100000,
 	K = 3,
-	M = 2;
+	M = 4;
 
 var name = "groupby.sum.multi: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M), function(){
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0"]);
+	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
 	var result = group.summulti("value");
 });
 
@@ -47,7 +47,7 @@ name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M, true), function(){
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0"]);
+	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
 	var result = group.summulti("value");
 });
 
@@ -56,7 +56,7 @@ name = "groupby.sum.multi: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M), function(){
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0"]);
+	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
 	var result = group.summulti("value");
 });
 
@@ -64,6 +64,6 @@ name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M, true), function(){
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0"]);
+	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
 	var result = group.summulti("value");
 });
