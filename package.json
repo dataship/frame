@@ -29,8 +29,10 @@
   },
   "homepage": "https://github.com/dataship/frame#readme",
   "devDependencies": {
+    "arrayloader": "^1.1.2",
     "async": "^2.1.5",
     "benchtap": "^1.0.0",
+    "floader": "^1.0.1",
     "tape": "^4.6.3"
   }
 }
