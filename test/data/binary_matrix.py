@@ -16,6 +16,7 @@ type_map = {
 	'.u64' : np.uint64,
 	'.f64' : np.float64
 }
+
 def get_extension(path):
 	filename, file_extension = os.path.splitext(path)
 	return file_extension
