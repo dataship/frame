@@ -8,9 +8,10 @@ case all data to be recreated.
 
 		"N" - a number of rows to generate
 		"id" - a list of id columns to generate
-		 	[{"M" : 3, "strings" : false}, {"M" : 3, "strings" : false}],
+			K - list of distinct values
+		 	[{"K" : 3, "strings" : false}, {"K" : 3, "strings" : false}],
 		"value" - a list of value columns to generate
-			[{"M" : 100}, {"M" : 100}]
+			[{"K" : 100}, {"K" : 100}]
 
 Implementing test data generation for a new operation involves two things:
 1. creation of a json spec
@@ -29,8 +30,8 @@ import binary_matrix
 
 EXTENSION = ".i32"
 
-def create_column(N, M):
-	return np.random.randint(0, M, N, dtype='int32')
+def create_column(N, K):
+	return np.random.randint(0, K, N, dtype='int32')
 
 def write_result(result, location):
 	"""write a dict to a file as a json document"""
@@ -93,7 +94,7 @@ if __name__ == '__main__':
 			for i in range(len(id_names)):
 				name = id_names[i]
 				spec = options['id'][i]
-				column = create_column(N, spec['M'])
+				column = create_column(N, spec['K'])
 				id_columns[name] = column
 
 				binary_matrix.write(directory + name + EXTENSION, column)
@@ -102,7 +103,7 @@ if __name__ == '__main__':
 			for i in range(len(value_names)):
 				name = value_names[i]
 				spec = options['value'][i]
-				column = create_column(N, spec['M'])
+				column = create_column(N, spec['K'])
 				value_columns[name] = column
 
 				binary_matrix.write(directory + name + EXTENSION, column)

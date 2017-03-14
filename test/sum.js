@@ -53,11 +53,13 @@ floader.load(dataDirectory + testFile, function(err, config){
 
 		var test = suite[i];
 
-		var N = test.N;
-		var M = 3;
 		names = test.id.map(function(spec, i){ return "id_" + i;});
 
-		var testName = "groupby.summulti: " + N + "x" + M + "x" + names.length;
+		var N = test.N; // number of rows
+		var M = names.length; // number of id columns
+		var K = test.id[0].K; // number of distinct values
+
+		var testName = "groupby.summulti: " + N + "x" + M + "x" + K;
 		tape(testName, generateTestCase(directory, names, ["value_0"]));
 	}
 });
