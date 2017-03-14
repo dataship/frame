@@ -201,10 +201,9 @@ floader.load(dataDirectory + testFile, function(err, config){
 		names = test.id.map(function(spec, i){ return "id_" + i;});
 
 		var N = test.N; // number of rows
-		var M = names.length; // number of id columns
-		var K = test.id[0].K; // number of distinct values
+		distincts = test.id.map(function(spec, i){ return spec.K; });
 
-		var testName = "groupby.countmulti: " + N + "x" + M + "x" + K;
+		var testName = "groupby.countmulti: " + N + " x " + "(" + distincts.join(", ") + ")"
 		tape(testName, generateTestCase(directory, names, ["value_0"]));
 	}
 });
