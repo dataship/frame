@@ -8,6 +8,10 @@ function isinteger(num){ return num % 1 === 0;}
 function isstring(obj){ return Object.prototype.toString.call(obj) === "[object String]";}
 function isfunction(obj){ return Object.prototype.toString.call(obj) === "[object Function]"; }
 function isdate(obj){ return Object.prototype.toString.call(obj) === "[object Date]";}
+function istypedarray(obj){
+	var tag = Object.prototype.toString.call(obj);
+	return tag === "[object Int32Array]" || tag === "[object Float32Array]" || tag === "[object Uint32Array]";
+}
 
 //function isframe(obj){ return isarray(obj) && (obj.length == 0 || isobject(obj[0])); }
 
@@ -89,17 +93,17 @@ function Frame(data){
 			column = data[key];
 
 			// are the items arrays?
-			if(isarray(column)){
+			if(isarray(column) || istypedarray(column)){
 				// yes, check for consistent lengths
 
 				if(length == null){
 					length = column.length;
 				} else if(length !== column.length){
-					throw new Exception("Invalid data, arrays in object must be of equal length");
+					throw new Error("Invalid data, arrays in object must be of equal length");
 				}
 			} else {
 				// no, invalid data
-				throw new Exception("Invalid data, must be array of rows or dict of columns");
+				throw new Error("Invalid data, must be array of rows or dict of columns");
 			}
 		}
 
@@ -110,6 +114,7 @@ function Frame(data){
 			// copy column data
 			// TODO: convert to TypedArrays here, if necessary and possible
 			this._cols[key] = column.slice(0);
+			//this._cols[key] = Array.from(column);
 		}
 
 
@@ -137,7 +142,7 @@ function Frame(data){
 				}
 			} else {
 				// no, invalid data
-				throw new Exception("Invalid data, must be array of rows or dict of columns");
+				throw new Error("Invalid data, must be array of rows or dict of columns");
 			}
 		}
 
