@@ -67,7 +67,7 @@ function generateTestCase(directory, id_names, value_names){
 		t.plan(1);
 
 		var names = id_names.concat(value_names);
-		// load matrices from files
+		// load columns from files
 		load(directory, names, function(err, columns){
 
 			floader.load(directory + "out.json", function(err, out){

@@ -212,7 +212,7 @@ function generateTestCase(directory, id_names, value_names){
 		t.plan(1);
 
 		var names = id_names.concat(value_names);
-		// load matrices from files
+		// load columns from files
 		load(directory, names, function(err, columns){
 
 			floader.load(directory + "out.json", function(err, out){
@@ -240,11 +240,6 @@ function loadInt32Array(path, cb){
 	return aloader.load(path, Int32Array, cb);
 }
 
-/* Load test matrices from JSON data, works in a browser (with XHR)
-	assumes three files 'a.json', 'b.json' and 'c.json' in nested Array format.
-
-callback = function(err, a, b, c)
-*/
 function load(directory, names, callback){
 
 	// array of paths to matrix data files for current test
