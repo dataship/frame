@@ -12,14 +12,6 @@ case all data to be recreated.
 		"value" - a list of value columns to generate
 			[{"M" : 100}, {"M" : 100}]
 
-	"in" and "args" parameters
-	"in" is an array of arrays which define the size and contents of a matrix
-		[[M, N, a, b]] produces a single MxN matrix of numbers in [0, 1) and
-		scales it according to: a * X + b. uses `numpy.random.random_sample`
-
-	"args" is a dictionary of arguments to pass to the operation specified for
-	the test, along with an array of the input matrices.
-
 Implementing test data generation for a new operation involves two things:
 1. creation of a json spec
 2. implementing an operation file with a single function named execute
