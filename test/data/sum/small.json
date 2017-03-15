@@ -9,14 +9,14 @@
 	},
 	{"N" : 10000,
 		"id" : [{"K" : 3, "type" : "int32"}, {"K" : 3, "type" : "int32"}],
-		"value" : [{"K" : 100, "type" : "int32"}, {"K" : 100, "type" : "int32"}]
+		"value" : [{"K" : 100, "type" : "int32"}]
 	},
 	{"N" : 100000,
 		"id" : [{"K" : 3, "type" : "int32"}, {"K" : 3, "type" : "int32"}],
-		"value" : [{"K" : 100, "type" : "int32"}, {"K" : 100, "type" : "int32"}]
+		"value" : [{"K" : 100, "type" : "int32"}]
 	},
 	{"N" : 1000000,
 		"id" : [{"K" : 3, "type" : "int32"}, {"K" : 3, "type" : "int32"}],
-		"value" : [{"K" : 100, "type" : "int32"}, {"K" : 100, "type" : "int32"}]
+		"value" : [{"K" : 100, "type" : "int32"}]
 	}
 ]
