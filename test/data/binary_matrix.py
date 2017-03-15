@@ -9,11 +9,15 @@ import os
 
 
 type_map = {
+	'.i8' : np.int8,
+	'.u8' : np.uint8,
+	'.i16' : np.int16,
+	'.u16' : np.uint16,
 	'.i32' : np.int32,
 	'.u32' : np.uint32,
 	'.f32' : np.float32,
-	'.i64' : np.int64,
-	'.u64' : np.uint64,
+	'.i64' : np.int64, # not compatible with javascript
+	'.u64' : np.uint64,# not compatible with javascript
 	'.f64' : np.float64
 }
 

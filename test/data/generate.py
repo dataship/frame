@@ -14,6 +14,9 @@ case all data to be recreated.
 		"value" - a list of value columns to generate
 			[{"K" : 100, "type": "int32"}, {"K" : 100, "type": "int32"}]
 
+NOTE: 64 bit integer types are not compatible with Javascript.
+This includes np.int64 and np.uint64
+
 Implementing test data generation for a new operation involves two things:
 1. creation of a json spec
 2. implementing an operation file with a single function named execute
@@ -31,11 +34,15 @@ import binary_matrix
 OUT_FILENAME = "out.json"
 
 extension_map = {
+	"int8" : ".i8",
+	"uint8" : ".u8",
+	"int16" : ".i16",
+	"uint16" : ".u16",
 	"int32" : ".i32",
 	"uint32" : '.u32',
 	"float32" : '.f32',
-	"int64" : '.i64',
-	"uint64" : '.u64',
+	"int64" : '.i64',  # not compatible with javascript
+	"uint64" : '.u64', # not compatible with javascript
 	"float64" : '.f64'
 }
 
@@ -53,7 +60,11 @@ def random_sample(size=None, dtype=np.float64):
 		sample = sample[()]
 	return sample
 
-int_types = set(["int32", "int64", "uint64", "uint32"])
+int_types = set([
+	"int8", "uint8",
+	"int16", "uint16",
+	"int32", "uint32",
+	"int64", "uint64"]) # not compatible with javascript
 float_types = set(["float32", "float64"])
 
 def create_column(N, K, type="int32"):
