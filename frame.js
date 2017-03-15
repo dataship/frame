@@ -8,9 +8,19 @@ function isinteger(num){ return num % 1 === 0;}
 function isstring(obj){ return Object.prototype.toString.call(obj) === "[object String]";}
 function isfunction(obj){ return Object.prototype.toString.call(obj) === "[object Function]"; }
 function isdate(obj){ return Object.prototype.toString.call(obj) === "[object Date]";}
+var typed_array_constructors = {
+	"[object Int32Array]" : true,
+	"[object Uint32Array]" : true,
+	"[object Float32Array]" : true,
+	"[object Int8Array]" : true,
+	"[object Uint8Array]" : true,
+	"[object Int16Array]" : true,
+	"[object Uint16Array]" : true,
+	"[object Float64Array]" : true
+}
 function istypedarray(obj){
 	var tag = Object.prototype.toString.call(obj);
-	return tag === "[object Int32Array]" || tag === "[object Float32Array]" || tag === "[object Uint32Array]";
+	return tag in typed_array_constructors;
 }
 
 //function isframe(obj){ return isarray(obj) && (obj.length == 0 || isobject(obj[0])); }
