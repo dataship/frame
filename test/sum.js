@@ -1,5 +1,6 @@
 var tape = require('tape'),
 	Frame = require('../lib/frame');
+
 /*
 tape("groupby.sum", function(t){
 	t.plan(1);
@@ -58,8 +59,8 @@ tape("groupbymulti.sum", function(t){
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
-
 */
+
 
 var RTOL = 1e-05, // 1e-05
 	ATOL = 1e-12; // 1e-12
@@ -95,7 +96,6 @@ floader.load(dataDirectory + testFile, function(err, config){
 });
 
 var OUT_FILENAME = "out.json";
-var DEFAULT_TYPE = "int32";
 
 
 function generateTestCase(directory, id_names, id_types, value_names, value_types){
