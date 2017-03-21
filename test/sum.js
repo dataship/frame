@@ -1,6 +1,6 @@
 var tape = require('tape'),
 	path = require('path'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 /*
 tape("groupby.sum", function(t){
 	t.plan(1);
