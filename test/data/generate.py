@@ -35,6 +35,8 @@ import binary_matrix
 
 OUT_FILENAME = "out.json"
 
+KEY_EXT = ".key"
+
 extension_map = {
 	"int8" : ".i8",
 	"uint8" : ".u8",
@@ -161,30 +163,29 @@ if __name__ == '__main__':
 			spec = options['id'][i]
 			K = spec['K']
 			dtype = spec['type']
-			if dtype == 'str':
+			if dtype[:3] == 'str':
 
-				if K <= 256:
+				if K <= 256 and dtype == 'str8':
 					dtype = "int8"
 					extension = ".s8"
-				elif K <= 65536:
+				elif K <= 65536 and dtype == 'str16':
 					dtype = "int16"
 					extension = ".s16"
 				else:
 					raise Exception("Too many strings!")
 
-
-				if os.path.exists(directory + name + ".code") and os.path.exists(directory + name + extension):
+				if os.path.exists(directory + name + KEY_EXT) and os.path.exists(directory + name + extension):
 					# read binary row file
 					rows = binary_matrix.read(directory + name + extension)
-					# read .code file
-					code = read_code(directory + name + ".code")
+					# read key file
+					code = read_code(directory + name + KEY_EXT)
 
 				else:
 					rows = create_column(N, K, dtype)
 					# map integers onto random strings
 					code = gen_strings(K)
-					# write .code file
-					write_code(code, directory + name + ".code")
+					# write key file
+					write_code(code, directory + name + KEY_EXT)
 					binary_matrix.write(directory + name + extension, rows)
 
 				column = [code[index] for index in rows]
