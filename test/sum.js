@@ -104,33 +104,56 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 
 		var names = id_names.concat(value_names);
 		var types = id_types.concat(value_types);
+
+		// which columns require a key file?
+		var key_names = id_names.filter(function(item, i){
+			return id_types[i] in dtest.string_types
+		});
+		var key_types = id_types.filter(function(item, i){
+			return item in dtest.string_types
+		});
+
 		// load columns from files
 		dtest.load(directory, names, types, function(err, columns){
 
-			floader.load(directory + OUT_FILENAME, function(err, out){
-				var expected = JSON.parse(out);
+			// load key files
+			dtest.load_key(directory, key_names, key_types, function(err, keys){
 
-				var column_set = {};
-				for (var i = 0; i < names.length; i++){
-					var name = names[i];
-					var column = columns[i];
-					column_set[name] = column;
-				}
-				var frame = new Frame(column_set);
+				floader.load(directory + OUT_FILENAME, function(err, out){
+					var expected = JSON.parse(out);
 
-				var g = frame.groupbymulti(id_names);
-				var actual = g.summulti(value_names[0]);
+					var column_set = {};
+					for (var i = 0; i < names.length; i++){
+						var name = names[i];
+						var column = columns[i];
+						column_set[name] = column;
+					}
+					// keys map a small set of integers to other things (like strings)
+					// they're a very simple form of fixed length coding
+					var key_set = {};
+					for (var i = 0; i < keys.length; i++){
+						var name = key_names[i];
+						var key = keys[i];
+						key_set[name] = key;
+					}
 
-				var assert;
-				if(value_types[0] in dtest.float_types){
-					assert = dtest.assert.tree.allclose;
-				} else {
-					assert = dtest.assert.tree.equal;
-				}
+					var frame = new Frame(column_set, key_set);
 
-				assert(t, actual, expected, null, RTOL, ATOL);
+					var g = frame.groupbymulti(id_names);
+					var actual = g.summulti(value_names[0]);
+
+					var assert;
+					if(value_types[0] in dtest.float_types){
+						assert = dtest.assert.tree.allclose;
+					} else {
+						assert = dtest.assert.tree.equal;
+					}
+
+					//console.log(actual);
+					assert(t, actual, expected, null, RTOL, ATOL);
+				});
+
 			});
-
 		});
 	};
 }
