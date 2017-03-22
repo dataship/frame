@@ -28,6 +28,8 @@ from docopt import docopt
 import os
 import sys
 import json
+import math
+import collections
 import numpy as np
 import binary_matrix
 
@@ -75,6 +77,8 @@ def create_column(N, K, type="int32"):
 	if type in float_types:
 		return K * random_sample(N, dtype=type)
 
+
+
 	return np.random.randint(0, K, N, dtype="int32")
 
 def write_result(result, location):
@@ -86,6 +90,35 @@ def write_result(result, location):
 		print("Couldn't write output JSON file: {0}".format(e.message))
 		sys.exit(1)
 
+def write_code(result, location):
+	write_result(result, location)
+
+def read_code(location):
+	with open(location, 'r') as f:
+		code = json.load(f)
+
+	return code
+
+class queue(collections.deque):
+	def pop(self):
+		return self.popleft()
+	def push(self, n):
+		self.append(n)
+
+def gen_strings(N):
+	chars = [chr(i) for i in range(ord('a'), ord('z') + 1)]
+	L = int(math.ceil(math.log(N) / math.log(len(chars))))
+
+	results = queue([""])
+
+	for i in range(L):
+		for j in range(len(results)):
+			r = results.pop()
+
+			for c in chars:
+				results.push(r+c)
+
+	return list(results)[:N]
 
 if __name__ == '__main__':
 	arguments = docopt(__doc__, version='JSON Groupby Generator')
@@ -126,17 +159,47 @@ if __name__ == '__main__':
 		for i in range(len(options['id'])):
 			name = "id_{0}".format(i)
 			spec = options['id'][i]
-			dtype = spec['type']
-			if dtype not in extension_map:
-				dtype = "int32"
 			K = spec['K']
+			dtype = spec['type']
+			if dtype == 'str':
 
-			extension = extension_map[dtype]
-			if os.path.exists(directory + name + extension):
-				column = binary_matrix.read(directory + name + extension)
+				if K <= 256:
+					dtype = "int8"
+					extension = ".s8"
+				elif K <= 65536:
+					dtype = "int16"
+					extension = ".s16"
+				else:
+					raise Exception("Too many strings!")
+
+
+				if os.path.exists(directory + name + ".code") and os.path.exists(directory + name + extension):
+					# read binary row file
+					rows = binary_matrix.read(directory + name + extension)
+					# read .code file
+					code = read_code(directory + name + ".code")
+
+				else:
+					rows = create_column(N, K, dtype)
+					# map integers onto random strings
+					code = gen_strings(K)
+					# write .code file
+					write_code(code, directory + name + ".code")
+					binary_matrix.write(directory + name + extension, rows)
+
+				column = [code[index] for index in rows]
+
 			else:
-				column = create_column(N, K, dtype)
-				binary_matrix.write(directory + name + extension, column)
+				if dtype not in extension_map:
+					dtype = "int32"
+
+				extension = extension_map[dtype]
+
+				if os.path.exists(directory + name + extension):
+					column = binary_matrix.read(directory + name + extension)
+				else:
+					column = create_column(N, K, dtype)
+					binary_matrix.write(directory + name + extension, column)
 
 			id_columns[name] = column
 
@@ -144,10 +207,10 @@ if __name__ == '__main__':
 		for i in range(len(options['value'])):
 			name = "value_{0}".format(i)
 			spec = options['value'][i]
+			K = spec['K']
 			dtype = spec['type']
 			if dtype not in extension_map:
 				dtype = "int32"
-			K = spec['K']
 
 			extension = extension_map[dtype]
 			if os.path.exists(directory + name + extension):

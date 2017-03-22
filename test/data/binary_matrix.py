@@ -18,29 +18,35 @@ type_map = {
 	'.f32' : np.float32,
 	'.i64' : np.int64, # not compatible with javascript
 	'.u64' : np.uint64,# not compatible with javascript
-	'.f64' : np.float64
+	'.f64' : np.float64,
+	'.s8' : np.int8,
+	'.s16' : np.int16
 }
 
 def get_extension(path):
 	filename, file_extension = os.path.splitext(path)
 	return file_extension
 
-def read(path, dtype=np.float32):
+def read(path):
 
 	extension = get_extension(path)
 	if extension in type_map:
 		dtype = type_map[extension]
+	else:
+		dtype=np.float32
 
 	with open(path, 'rb') as f:
 		matrix = np.fromfile(f, dtype=dtype)
 
 	return matrix
 
-def write(path, matrix, dtype=np.float32):
+def write(path, matrix):
 
 	extension = get_extension(path)
 	if extension in type_map:
 		dtype = type_map[extension]
+	else:
+		dtype=np.float32
 
 	with open(path, 'wb') as f:
 		f.write(matrix.astype(dtype=dtype).tostring())
