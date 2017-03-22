@@ -1,5 +1,5 @@
 var test = require('tape'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 
 test("access column from hidden property", function(t){
 	t.plan(1);
@@ -11,8 +11,25 @@ test("access column from hidden property", function(t){
 		"b" : b
 	});
 
-
 	t.equals(JSON.stringify(frame._cols["a"]), JSON.stringify(a));
+});
+
+test("access keys from hidden property", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+	var k = ["one", "two"];
+
+	var frame = new Frame({
+			"a" : a,
+			"b" : b
+		},
+		{
+			"a" : k
+	});
+
+
+	t.equals(JSON.stringify(frame._keys["a"]), JSON.stringify(k));
 });
 
 test("row based constructor creates columns correctly", function(t){
