@@ -70,6 +70,25 @@ test("access column as property", function(t){
 	t.equals(JSON.stringify(frame["a"]), JSON.stringify(a));
 });
 
+test("accessing column as property decodes when key is present", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+	var k = ["one", "two"];
+
+	var frame = new Frame({
+			"a" : a,
+			"b" : b
+		},
+		{
+			"a" : k
+	});
+
+
+	var expected = ["one", "one", "one", "two", "two", "one", "two", "one", "two"];
+	t.equals(JSON.stringify(frame["a"]), JSON.stringify(expected));
+});
+
 test("only columns are enumerable", function(t){
 	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
