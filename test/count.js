@@ -79,7 +79,7 @@ floader.load(dataDirectory + testFile, function(err, config){
 		var N = test.N; // number of rows
 		distincts = test.id.map(function(spec, i){ return spec.K; });
 
-		var testName = "groupby.countmulti: " + N + " x " + "(" + distincts.join(", ") + ")"
+		var testName = "groupby.count: " + N + " x " + "(" + distincts.join(", ") + ")"
 		tape(testName, generateTestCase(directory, names, types, ["value_0"], [test.value[0].type]));
 	}
 });
@@ -104,8 +104,8 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 				}
 				var frame = new Frame(column_set);
 
-				var g = frame.groupbymulti(id_names);
-				var actual = g.countmulti(value_names[0]);
+				var g = frame.groupby(id_names);
+				var actual = g.count(value_names[0]);
 
 				var assert;
 				if(value_types[0] in dtest.float_types){
