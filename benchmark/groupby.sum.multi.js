@@ -1,6 +1,6 @@
 var benchtap = require('benchtap'),
 	gen = require('../generate'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 
 var STRINGS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
 
@@ -33,21 +33,26 @@ function createSetup(N, K, M, useStrings){
 
 var N = 100000,
 	K = 3,
-	M = 4;
+	M = 1;
+
+var groups = [];
+for(var i = 0; i < M; i ++) groups.push("id_"+i);
 
 var name = "groupby.sum.multi: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M), function(){
+
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
+	var group = this.frame.groupbymulti(groups);
 	var result = group.summulti("value");
 });
 
 name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M, true), function(){
+
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
+	var group = this.frame.groupbymulti(groups);
 	var result = group.summulti("value");
 });
 
@@ -55,15 +60,17 @@ N = 1000000;
 name = "groupby.sum.multi: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M), function(){
+
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
+	var group = this.frame.groupbymulti(groups);
 	var result = group.summulti("value");
 });
 
 name += " (strings)";
 
 benchtap(name, {"operations" :  2*N}, createSetup(N, K, M, true), function(){
+
 	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
-	var group = this.frame.groupbymulti(["id_0", "id_1", "id_2", "id_3"]);
+	var group = this.frame.groupbymulti(groups);
 	var result = group.summulti("value");
 });
