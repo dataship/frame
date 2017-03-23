@@ -1,5 +1,5 @@
 var tape = require('tape'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 /*
 	ports = frame.groupby("ports");
 	for (name in ports){
@@ -169,93 +169,6 @@ test("groupbymulti.sum", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 */
-
-var RTOL = 1e-05,
-	ATOL = 1e-12;
-
-var dataDirectory = 'test/data/count/',
-	testFile = 'small.json';
-
-var async = require('async'),
-	floader = require('floader'),
-	aloader = require('arrayloader');
-
-floader.load(dataDirectory + testFile, function(err, config){
-
-	var suite = JSON.parse(config);
-
-	for(var i = 0; i < suite.length; i++){
-
-		var prefix = String("0000" + (i + 1)).slice(-4);
-
-		// directory containing matrix data files for current test
-		var directory = dataDirectory + prefix + '/';
-
-		var test = suite[i];
-		/*
-		"N" : 10000,
-		"id" : [{"M" : 3, "strings" : false}, {"M" : 3, "strings" : false}],
-		"value" : [{"M" : 100}, {"M" : 100}]
-		*/
-
-		names = test.id.map(function(spec, i){ return "id_" + i;});
-
-		var N = test.N; // number of rows
-		distincts = test.id.map(function(spec, i){ return spec.K; });
-
-		var testName = "groupby.countmulti: " + N + " x " + "(" + distincts.join(", ") + ")"
-		tape(testName, generateTestCase(directory, names, ["value_0"]));
-	}
-});
-
-function generateTestCase(directory, id_names, value_names){
-	return function(t){
-		t.plan(1);
-
-		var names = id_names.concat(value_names);
-		// load columns from files
-		load(directory, names, function(err, columns){
-
-			floader.load(directory + "out.json", function(err, out){
-				var expected = JSON.parse(out);
-
-				var column_set = {};
-				for (var i = 0; i < names.length; i++){
-					var name = names[i];
-					var column = columns[i];
-					column_set[name] = column;
-				}
-				var frame = new Frame(column_set);
-
-				var g = frame.groupbymulti(id_names);
-				var actual = g.countmulti(value_names[0]);
-
-				t.equals(JSON.stringify(actual), JSON.stringify(expected));
-			});
-
-		});
-	};
-}
-
-function loadInt32Array(path, cb){
-	return aloader.load(path, Int32Array, cb);
-}
-
-function load(directory, names, callback){
-
-	// array of paths to matrix data files for current test
-	var paths = names.map(function(name){ return directory + name + ".i32";});
-
-	//console.log(testFiles);
-	async.map(paths, loadInt32Array,
-		function(err, results){
-
-			if(err) return callback(err);
-
-			callback(err, results);
-		}
-	);
-};
 
 /*
 test("groupbymulti.sum", function(t){
