@@ -1,35 +1,47 @@
 var benchtap = require('benchtap'),
 	gen = require('../generate'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 
-function createSetup(N, K, useStrings){
+var STRINGS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
+/*
+N - number of rows
+K - number of distinct values in id columns
+M - number of id columns
+*/
+function createSetup(N, K, M, useStrings){
 	return function(event){
 		// generate data
-		var groupCol = gen.Array.int(N, K);
-		var valueCol = gen.Array.int(N, 100);
+		var columns = {
+			"value" : gen.Array.int(N, 100)
+		};
+		var names = [];
+		for (var m = 0; m < M; m++){
+			var name = "id_"+m;
+			columns[name] = gen.Array.int(N, K);
 
-		// map to strings
-		if(useStrings)
-			groupCol = groupCol.map(i => ["a", "b", "c"][i]);
+			// map to strings
+			if(useStrings){
+				columns[name] = columns[name].map(i => STRINGS[i]);
+			}
+
+			names[m] = name;
+		}
 
 		// create frame
-		var columnDict = {
-			"group-col" : groupCol,
-			"reduce-col" : valueCol
-		};
-
-		this.frame = new Frame(columnDict);
-		this.group = this.frame.groupby("group-col");
+		this.frame = new Frame(columns);
+		// group on all id columns
+		this.group = this.frame.groupby(names);
 	};
 }
 
 var N = 100000,
-	K = 3;
+	K = 3,
+	M = 1;
 
-var name = "sum: " + N + "x" + K;
+var name = "sum: " + N + "x" + K + "x" + M;
 
-benchtap(name, {"operations": N}, createSetup(N, K), function(){
-	var result = this.group.reduce("reduce-col");
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	var result = this.group.sum("value");
 });
 
 /*
@@ -43,10 +55,10 @@ benchtap(name, {"operations": N}, createSetup(N, K, true), function(){
 
 var N = 1000000;
 
-name = "sum: " + N + "x" + K;
+name = "sum: " + N + "x" + K + "x" + M;
 
-benchtap(name, {"operations": N}, createSetup(N, K), function(){
-	var result = this.group.reduce("reduce-col");
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	var result = this.group.sum("value");
 });
 
 /*

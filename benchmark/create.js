@@ -1,6 +1,6 @@
 var benchtap = require('benchtap'),
 	gen = require('../generate'),
-	Frame = require('../frame');
+	Frame = require('../lib/frame');
 
 function createSetup(N, K, useStrings){
 	return function(event){
