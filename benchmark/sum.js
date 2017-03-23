@@ -68,3 +68,12 @@ benchtap(name, {"operations": N}, createSetup(N, K, true), function(){
 	var result = this.group.reduce("reduce-col");
 });
 */
+
+K = 200;
+M = 2;
+
+var name = "sum: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	var result = this.group.sum("value");
+});
