@@ -7,13 +7,13 @@ function simpleTestCases(){
 	tape("groupby accepts single string", function(t){
 		t.plan(1);
 		var frame = new Frame({
-			"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"id"    : [0, 0, 0, 1, 1, 0, 1, 0, 1],
 			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 		});
 
 		var expected = {
-			0: 10,
-			1: 9
+			0: 10, // 1 + 2 + 2 + 3 + 2
+			1: 9   // 3 + 1 + 4 + 1
 		};
 
 		var g = frame.groupby("id");
@@ -26,12 +26,12 @@ function simpleTestCases(){
 	tape("groupby accepts single string argument over string variable", function(t){
 		t.plan(1);
 		var frame = new Frame({
-			"id"  : ["a", "a", "a", "b", "b", "a", "b", "a", "b"],
-			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+			"id"    : ["a", "a", "a", "b", "b", "a", "b", "a", "b"],
+			"value" : [ 1,   2,   2,   3,   1,   3,   4,   2,   1]
 		});
 		expected = {
-			"a": 10,
-			"b": 9
+			"a": 10, // 1 + 2 + 2 + 3 + 2
+			"b": 9   // 3 + 1 + 4 + 1
 		};
 
 		var g = frame.groupby("id");
@@ -51,12 +51,12 @@ function simpleTestCases(){
 
 		var expected = {
 			"0" : {
-				"0" : 8,//[0, 1, 5, 7], 1 + 2 + 3 + 2
-				"1" : 2//[2]
+				"0" : 8, // 1 + 2 + 3 + 2
+				"1" : 2  // 2
 			},
 			"1" : {
-				"0" : 1,//[4],
-				"1" : 8//[3, 6, 8] 3 + 4 + 1
+				"0" : 1, // 1
+				"1" : 8  // 3 + 4 + 1
 			}
 		};
 
