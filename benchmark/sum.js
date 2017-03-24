@@ -1,5 +1,5 @@
 var benchtap = require('benchtap'),
-	gen = require('../generate'),
+	gen = require('../lib/test').generate,
 	Frame = require('../lib/frame');
 
 var STRINGS = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"];
