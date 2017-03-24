@@ -1,66 +1,73 @@
 var tape = require('tape'),
 	Frame = require('../lib/frame');
 
-/*
-tape("groupby.sum", function(t){
-	t.plan(1);
-	var frame = new Frame({
-		"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
-		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+// simple instructive test cases
+function simpleTestCases(){
+
+	tape("groupby accepts single string", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
+
+		var expected = {
+			0: 10,
+			1: 9
+		};
+
+		var g = frame.groupby("id");
+		var actual = g.sum("value");
+
+		t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
+
 	});
 
-	var expected = [10, 9];
+	tape("groupby accepts single string argument over string variable", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id"  : ["a", "a", "a", "b", "b", "a", "b", "a", "b"],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
+		expected = {
+			"a": 10,
+			"b": 9
+		};
 
-	var g = frame.groupby("id");
-	var actual = g.sum("value");
+		var g = frame.groupby("id");
+		var actual = g.sum("value");
 
-	t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
+		t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
 
-});
-
-tape("groupby.sum.strings", function(t){
-	t.plan(1);
-	var frame = new Frame({
-		"id"  : ["a", "a", "a", "b", "b", "a", "b", "a", "b"],
-		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 	});
 
-	var expected = [10, 9];
+	tape("groupby accepts array argument", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
 
-	var g = frame.groupby("id");
-	var actual = g.sum("value");
+		var expected = {
+			"0" : {
+				"0" : 8,//[0, 1, 5, 7], 1 + 2 + 3 + 2
+				"1" : 2//[2]
+			},
+			"1" : {
+				"0" : 1,//[4],
+				"1" : 8//[3, 6, 8] 3 + 4 + 1
+			}
+		};
 
-	t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
 
-});
+		var g = frame.groupby(["id_0", "id_1"]);
+		var actual = g.sum("value");
 
-tape("groupbymulti.sum", function(t){
-	t.plan(1);
-	var frame = new Frame({
-		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
-		"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
-		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		t.equals(JSON.stringify(actual), JSON.stringify(expected));
 	});
 
-	var expected = {
-		"0" : {
-			"0" : 8,//[0, 1, 5, 7], 1 + 2 + 3 + 2
-			"1" : 2//[2]
-		},
-		"1" : {
-			"0" : 1,//[4],
-			"1" : 8//[3, 6, 8] 3 + 4 + 1
-		}
-	};
-
-
-	var g = frame.groupbymulti(["id_0", "id_1"]);
-	var actual = g.summulti("value");
-
-	t.equals(JSON.stringify(actual), JSON.stringify(expected));
-});
-*/
-
+}
 
 var RTOL = 1e-05, // 1e-05
 	ATOL = 1e-12; // 1e-12
@@ -74,6 +81,7 @@ var floader = require('floader'),
 floader.load(dataDirectory + testFile, function(err, config){
 
 	var suite = JSON.parse(config);
+	simpleTestCases();
 
 	for(var i = 0; i < suite.length; i++){
 
