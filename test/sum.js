@@ -67,6 +67,31 @@ function simpleTestCases(){
 		t.equals(JSON.stringify(actual), JSON.stringify(expected));
 	});
 
+	tape("groupby accepts multiple string arguments", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
+
+		var expected = {
+			"0" : {
+				"0" : 8, // 1 + 2 + 3 + 2
+				"1" : 2  // 2
+			},
+			"1" : {
+				"0" : 1, // 1
+				"1" : 8  // 3 + 4 + 1
+			}
+		};
+
+
+		var g = frame.groupby("id_0", "id_1");
+		var actual = g.sum("value");
+
+		t.equals(JSON.stringify(actual), JSON.stringify(expected));
+	});
 }
 
 var RTOL = 1e-05, // 1e-05
