@@ -1,6 +1,54 @@
 var tape = require('tape'),
+	BitArray = require('bit-array'),
 	Frame = require('../lib/frame');
 /*
+
+	frame = frame.where("id_0", v => v == 1);
+	frame.where("id_0", 1)
+	frame.whereeq("id_0", 1)
+	frame.where("id_0").eq(1)
+	frame.where("id_0", eq(1))
+
+	frame = frame.where("id_0", v => v in [0, 1]);
+	frame.where("id_0", [0, 1])
+	frame.wherein("id_0", [0, 1])
+	frame.where("id_0").in([0, 1])
+	frame.where("id_0", in([0, 1]))
+
+	frame.where("id_0").in([0, 1]).where("id_1").eq(1).groupby("id_0").sum("value")
+
+	frame.wherein("id_0", [0, 1]).whereeq("id_1", 1).groupby("id_0").sum("value")
+
+	frame.where("id_0", in([0, 1])).where("id_1", eq(1)).groupby("id_0").sum("value")
+
+	frame.where.in("id_0", [0, 1]).where.eq("id_1", 1).groupby("id_0").sum("value")
+
+	in([0, 1])
+	lt(5)
+
+	frame.where("value").lt(2)
+	frame.where("value", lt(2))
+
+	frame.whereless()
+
+	// filtering
+	subset = frame.filter("country", c => c in ["Australia", "Japan", "China"])
+	subset = frame.filter("country", ["Australia", "Japan", "China"])
+	subset = frame.filter()
+
+	subset = frame.include("country", ["Australia", "Japan", "China"])
+	subset = frame.include("country", "Australia")
+
+	subset = frame.exclude("country", ["Canada"])
+	subset = frame.exclude("country", "Canada")
+	subset = frame.filter(r => r.country in ["Australia", "Japan", "China"])
+
+	in, <, >, ===, <=, >=
+
+	subset = frame.where(r => r.country in ["Australia", "Japan", "China"])
+	subset = frame.wherein("country", ["Australia", "Japan", "China"])
+	subset = frame.wherenotin("country", "Canada")
+
 	ports = frame.groupby("ports");
 	for (name in ports){
 
@@ -59,6 +107,7 @@ domain_category = pins.groupby("domain", "category")
 // pivot table, cross tabulation
 domain_category.count()
 */
+
 /*
 test("groupby.count", function(t){
 	t.plan(1);
