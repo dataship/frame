@@ -29,7 +29,7 @@ function createSetup(N, K, M, useStrings){
 
 		// create frame
 		this.frame = new Frame(columns);
-		this.frame.where("id_0", [0, 1]);
+		this.frame.where("id_0", 0);
 		//this.frame.where(row => row["id_1"] == 1);
 		//this.frame.where("id_1", id => id == 1);
 	};
