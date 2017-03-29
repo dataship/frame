@@ -11,6 +11,7 @@ var spawn = require('child_process').spawn,
 var tasks = [
 	['generate.py', 'count/', 'count/small.json'],
 	['generate.py', 'sum/',   'sum/small.json']
+	['generate.py', 'where.in.sum/',   'where.in.sum/small.json']
 ];
 var options = {
     "cwd" : __dirname,

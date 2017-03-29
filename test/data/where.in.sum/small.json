@@ -1,0 +1,42 @@
+[
+	{"N" : 10000,
+		"id" : [{"K" : 3, "type" : "int8"}, {"K" : 3, "type" : "uint8"}],
+		"value" : [{"K" : 100, "type" : "int32"}]
+	},
+	{"N" : 10000,
+		"id" : [{"K" : 3, "type" : "int8"}, {"K" : 3, "type" : "str8"}],
+		"value" : [{"K" : 100, "type" : "int32"}]
+	},
+	{"N" : 10000,
+		"id" : [{"K" : 100, "type" : "int8"}, {"K" : 3, "type" : "str8"}],
+		"value" : [{"K" : 1000, "type" : "int32"}]
+	},
+	{"N" : 10000,
+		"id" : [{"K" : 100, "type" : "int8"}, {"K" : 100, "type" : "str8"}],
+		"value" : [{"K" : 1000, "type" : "int32"}]
+	},
+	{"N" : 10000,
+		"id" : [{"K" : 3, "type" : "int16"}, {"K" : 3, "type" : "uint16"}],
+		"value" : [{"K" : 100, "type" : "float32"}]
+	},
+	{"N" : 10000,
+		"id" : [{"K" : 3, "type" : "int32"}, {"K" : 3, "type" : "uint32"}],
+		"value" : [{"K" : 100, "type" : "int32"}]
+	},
+	{"N" : 100000,
+		"id" : [{"K" : 3, "type" : "int32"}, {"K" : 3, "type" : "int32"}],
+		"value" : [{"K" : 100, "type" : "int32"}]
+	},
+	{"N" : 100000,
+		"id" : [{"K" : 1000, "type" : "int32"}, {"K" : 300, "type" : "str16"}],
+		"value" : [{"K" : 100, "type" : "int32"}]
+	},
+	{"N" : 100000,
+		"id" : [{"K" : 1000, "type" : "int32"}, {"K" : 300, "type" : "str16"}],
+		"value" : [{"K" : 100, "type" : "float32"}]
+	},
+	{"N" : 1000000,
+		"id" : [{"K" : 3, "type" : "uint8"}, {"K" : 3, "type" : "int32"}],
+		"value" : [{"K" : 100, "type" : "float64"}]
+	}
+]
