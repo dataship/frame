@@ -38,12 +38,12 @@ var N = 100000,
 	K = 3,
 	M = 2;
 
-// var name = "where.function: " + N + "x" + K + "x" + M;
-//
-// benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-// 	//var result = this.frame.where(row => row["id_0"] == 1);
-// 	var result = this.frame.where("id_0", id => id == 1);
-// });
+var name = "where.function: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	//var result = this.frame.where(row => row["id_0"] == 1);
+	var result = this.frame.where("id_0", id => id == 1);
+});
 
 /*
 name += " (strings)";
@@ -54,14 +54,14 @@ benchtap(name, {"operations": N}, createSetup(N, K, true), function(){
 */
 
 
-// var N = 1000000;
-//
-// name = "where.function: " + N + "x" + K + "x" + M;
-//
-// benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-// 	//var result = this.frame.where(row => row["id_0"] == 1);
-// 	var result = this.frame.where("id_0", id => id == 1);
-// });
+var N = 1000000;
+
+name = "where.function: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	//var result = this.frame.where(row => row["id_0"] == 1);
+	var result = this.frame.where("id_0", id => id == 1);
+});
 
 /*
 name += " (strings)";
@@ -75,12 +75,12 @@ N = 1000000;
 K = 200;
 M = 2;
 
-// var name = "where.function: " + N + "x" + K + "x" + M;
-//
-// benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-// 	//var result = this.frame.where(row => row["id_0"] == 1);
-// 	var result = this.frame.where("id_0", id => id == 1);
-// });
+var name = "where.equal: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	//var result = this.frame.where(row => row["id_0"] == 1);
+	var result = this.frame.where("id_0", 1);
+});
 
 var name = "where.in: " + N + "x" + K + "x" + M;
 
