@@ -12,7 +12,7 @@ function simpleTestCases(){
 			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 		});
 
-		var expected = 9; // 1 + 2 + 2 + 3 + 1 + 3 + 4 + 2 + 1
+		var expected = 9; // 3 + 1 + 4 + 1
 
 		var actual = frame.where("id_0", 1).sum("value");
 
@@ -58,7 +58,7 @@ function simpleTestCases(){
 			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 		});
 
-		var expected = 8;
+		var expected = 8; // 3 + 4 + 1
 		var actual = frame.where("id_0", 1).where("id_1", 1).sum("value");
 
 		t.equals(actual, expected);
@@ -72,7 +72,7 @@ function simpleTestCases(){
 			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 		});
 
-		var expected = 14;
+		var expected = 14; // 1 + 2 + 2 + 3 + 4 + 2
 		frame = frame.where("id", [0, 2]);
 		var actual = frame.sum("value");
 
