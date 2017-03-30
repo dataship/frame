@@ -126,7 +126,7 @@ floader.load(dataDirectory + testFile, function(err, config){
 		var N = test.N; // number of rows
 		var distincts = test.id.map(function(spec, i){ return spec.K; });
 
-		var testName = "where.in.sum: " + N + " x " + "(" + distincts.join(", ") + ")"
+		var testName = "groupby.where.sum: " + N + " x " + "(" + distincts.join(", ") + ")"
 		tape(testName, generateTestCase(directory, names, types, ["value_0"], [test.value[0].type]));
 	}
 });
