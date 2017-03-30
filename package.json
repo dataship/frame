@@ -1,6 +1,6 @@
 {
   "name": "dataship-frame",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "A lightweight, high performance Columnar Data Store disguised as a Data Frame",
   "main": "frame.js",
   "directories": {
