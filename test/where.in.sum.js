@@ -27,9 +27,25 @@ function simpleTestCases(){
 			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 		});
 
-		var expected = 10; // 1 + 2 + 2 + 3 + 1 + 3 + 4 + 2 + 1
+		var expected = 10; // 1 + 2 + 2 + 3 + 2
 
 		var actual = frame.where("id_0", 0).sum("value");
+
+		t.equals(actual, expected);
+	});
+
+	tape("where does not modify sum on original Frame", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
+
+		var expected = 19; // 1 + 2 + 2 + 3 + 1 + 3 + 4 + 2 + 1
+
+		var fw = frame.where("id_0", 0);
+		var actual = frame.sum("value");
 
 		t.equals(actual, expected);
 	});
