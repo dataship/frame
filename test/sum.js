@@ -26,8 +26,8 @@ function simpleTestCases(){
 	tape("groupby accepts single string argument over string variable", function(t){
 		t.plan(1);
 		var frame = new Frame({
-			"id"    : ["a", "a", "a", "b", "b", "a", "b", "a", "b"],
-			"value" : [ 1,   2,   2,   3,   1,   3,   4,   2,   1]
+			"id"    : ["b", "a", "a", "a", "b", "a", "b", "a", "b"],
+			"value" : [ 3,   1,   2,   2,   1,   3,   4,   2,   1]
 		});
 		expected = {
 			"a": 10, // 1 + 2 + 2 + 3 + 2
