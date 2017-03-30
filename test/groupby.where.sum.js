@@ -79,8 +79,8 @@ function simpleTestCases(){
 	});
 }
 
-simpleTestCases();
-/*
+//simpleTestCases();
+
 var SAMPLE = 10;
 function numberCompare(a, b){ return a - b; }
 // get a predefined subset of a column (matches test data generation)
@@ -100,7 +100,7 @@ function generate_subset(column){
 var RTOL = 1e-05, // 1e-05
 	ATOL = 1e-12; // 1e-12
 
-var dataDirectory = 'test/data/where.in.sum/',
+var dataDirectory = 'test/data/groupby.where.sum/',
 	testFile = 'small.json';
 
 var floader = require('floader'),
@@ -178,13 +178,26 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 					var subset = generate_subset(column_set["id_0"]);
 					//console.log(subset);
 					frame.where("id_0", subset);
-					var actual = frame.sum("value_0");
 
-					dtest.assert.close(t, actual, expected, "close", RTOL, ATOL);
+					var g = frame.groupby(id_names);
+					var actual = g.sum(value_names[0]);
+
+					var assert;
+					if(value_types[0] in dtest.float_types){
+						assert = dtest.assert.tree.allclose;
+					} else {
+						assert = dtest.assert.tree.equal;
+					}
+
+					//console.log(actual);
+					var success = assert(t, actual, expected, null, RTOL, ATOL);
+					if(!success){
+						console.log(actual);
+						console.log(expected);
+					}
 				});
 
 			});
 		});
 	};
 }
-*/
