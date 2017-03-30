@@ -16,8 +16,8 @@ function simpleTestCases(){
 			1: 9   // 3 + 1 + 4 + 1
 		};
 
-		var g = frame.groupby("id");
-		var actual = g.sum("value");
+		frame = frame.groupby("id");
+		var actual = frame.sum("value");
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
 
@@ -34,8 +34,8 @@ function simpleTestCases(){
 			"b": 9   // 3 + 1 + 4 + 1
 		};
 
-		var g = frame.groupby("id");
-		var actual = g.sum("value");
+		frame = frame.groupby("id");
+		var actual = frame.sum("value");
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected), "reduce");
 
@@ -61,8 +61,8 @@ function simpleTestCases(){
 		};
 
 
-		var g = frame.groupby(["id_0", "id_1"]);
-		var actual = g.sum("value");
+		frame = frame.groupby(["id_0", "id_1"]);
+		var actual = frame.sum("value");
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected));
 	});
@@ -87,7 +87,7 @@ function simpleTestCases(){
 		};
 
 
-		frame.groupby("id_0", "id_1");
+		frame = frame.groupby("id_0", "id_1");
 		var actual = frame.sum("value");
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected));

@@ -72,7 +72,7 @@ function simpleTestCases(){
 			"0" : 6, // 1 + 2 + 3
 			"1" : 8   // 2 + 4 + 2
 		};
-		frame.where("id_0", [0, 2]).groupby("id_1");
+		frame = frame.where("id_0", [0, 2]).groupby("id_1");
 		var actual = frame.sum("value");
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected));
@@ -177,10 +177,9 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 
 					var subset = generate_subset(column_set["id_0"]);
 					//console.log(subset);
-					frame.where("id_0", subset);
+					frame = frame.where("id_0", subset).groupby(id_names);
 
-					var g = frame.groupby(id_names);
-					var actual = g.sum(value_names[0]);
+					var actual = frame.sum(value_names[0]);
 
 					var assert;
 					if(value_types[0] in dtest.float_types){
@@ -191,10 +190,11 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 
 					//console.log(actual);
 					var success = assert(t, actual, expected, null, RTOL, ATOL);
+					/*
 					if(!success){
 						console.log(actual);
 						console.log(expected);
-					}
+					}*/
 				});
 
 			});

@@ -57,7 +57,7 @@ function simpleTestCases(){
 		});
 
 		var expected = 14;
-		frame.where("id", [0, 2]);
+		frame = frame.where("id", [0, 2]);
 		var actual = frame.sum("value");
 
 		t.equals(actual, expected);
@@ -162,7 +162,7 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 
 					var subset = generate_subset(column_set["id_0"]);
 					//console.log(subset);
-					frame.where("id_0", subset);
+					frame = frame.where("id_0", subset);
 					var actual = frame.sum("value_0");
 
 					dtest.assert.close(t, actual, expected, "close", RTOL, ATOL);

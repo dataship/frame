@@ -32,7 +32,7 @@ tape("where with numerical argument creates correct filter", function(t){
 		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 	});
 
-	frame.where("id", 1);
+	frame = frame.where("id", 1);
 
 	var expected = new BitArray(9);
 
@@ -53,7 +53,7 @@ tape("where with array argument creates correct filter", function(t){
 		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 	});
 
-	frame.where("id", [0, 2]);
+	frame = frame.where("id", [0, 2]);
 
 	var expected = new BitArray(9);
 
