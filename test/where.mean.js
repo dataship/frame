@@ -45,7 +45,7 @@ function simpleTestCases(){
 		var expected = 2.1111111111; // (1 + 2 + 2 + 3 + 1 + 3 + 4 + 2 + 1) / 9
 
 		var fw = frame.where("id_0", 0);
-		var actual = frame.sum("value");
+		var actual = frame.mean("value");
 
 		dtest.assert.close(t, actual, expected);
 	});
@@ -59,7 +59,7 @@ function simpleTestCases(){
 		});
 
 		var expected = 2.666666666; // (3 + 4 + 1) / 3
-		var actual = frame.where("id_0", 1).where("id_1", 1).sum("value");
+		var actual = frame.where("id_0", 1).where("id_1", 1).mean("value");
 
 		dtest.assert.close(t, actual, expected);
 	});
@@ -74,7 +74,7 @@ function simpleTestCases(){
 
 		var expected = 2.3333333333333; // 1 + 2 + 2 + 3 + 4 + 2
 		frame = frame.where("id", [0, 2]);
-		var actual = frame.sum("value");
+		var actual = frame.mean("value");
 
 		dtest.assert.close(t, actual, expected);
 	});
