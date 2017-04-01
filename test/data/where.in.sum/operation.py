@@ -1,4 +1,5 @@
-"""sum operation
+"""where.in sum operation
+	filter by inclusion in a list, then sum the matches
 """
 import pandas as pd
 import math
