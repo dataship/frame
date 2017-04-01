@@ -25,7 +25,6 @@ def execute(options, id_columns, value_columns):
 	uniques = set(column[:SAMPLE])
 	l = int(math.ceil(len(uniques)/2.0))
 	subset = sorted(list(uniques))[:l]
-	print(subset)
 
 	#frame.loc[frame[id_name] == 1, value_name].sum()
 	v = frame.loc[frame[id_name].isin(subset), value_name].sum()
