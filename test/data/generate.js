@@ -14,6 +14,7 @@ var tasks = [
 	['generate.py', 'groupby.mean/',   'groupby.mean/small.json'],
 	['generate.py', 'groupby.where.sum/',   'groupby.where.sum/small.json'],
 	['generate.py', 'where.in.sum/',   'where.in.sum/small.json'],
+	['generate.py', 'mean/',   'mean/small.json'],
 	['generate.py', 'where.mean/',   'where.mean/small.json']
 ];
 var options = {
