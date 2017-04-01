@@ -17,8 +17,9 @@ var tasks = [
 	['generate.py', 'where.mean/',   'where.mean/small.json']
 ];
 var options = {
-    "cwd" : __dirname,
-    "stdio": ["inherit", "inherit", "inherit"]};
+	"cwd" : __dirname,
+	"stdio": ["inherit", "inherit", "inherit"]
+};
 
 
 async.eachSeries(tasks, function(task, callback){
