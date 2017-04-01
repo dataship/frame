@@ -29,8 +29,6 @@ function createSetup(N, K, M, useStrings){
 
 		// create frame
 		this.frame = new Frame(columns);
-		// group on all id columns
-		this.group = this.frame.groupby(names);
 	};
 }
 
@@ -41,7 +39,7 @@ var N = 100000,
 var name = "sum: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-	var result = this.group.sum("value");
+	var result = this.frame.sum("value");
 });
 
 /*
@@ -58,7 +56,7 @@ var N = 1000000;
 name = "sum: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-	var result = this.group.sum("value");
+	var result = this.frame.sum("value");
 });
 
 /*
@@ -75,5 +73,5 @@ M = 2;
 var name = "sum: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
-	var result = this.group.sum("value");
+	var result = this.frame.sum("value");
 });
