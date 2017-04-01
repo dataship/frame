@@ -27,6 +27,25 @@ function simpleTestCases(){
 
 	});
 
+	tape("groupby accepts single string", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id"    : [ 0,    0,    0,    1,   1,   0,   1,   0,   1],
+			"value" : [1.4, 10.3, 24.2, 31.2, 1.9, 8.6, 4.7, 21.2, 7.4]
+		});
+
+		var expected = {
+			0: 13.14, // 1.4 + 10.3 + 24.2 + 8.6 + 21.2
+			1: 11.3   // 31.2 + 1.9 + 4.7 + 7.4
+		};
+
+		frame = frame.groupby("id");
+		var actual = frame.mean("value");
+
+		dtest.assert.tree.allclose(t, actual, expected, "mean", RTOL, ATOL);
+
+	});
+
 	tape("groupby accepts single string argument over string variable", function(t){
 		t.plan(1);
 		var frame = new Frame({
@@ -62,7 +81,6 @@ function simpleTestCases(){
 				"1" : 2.6666666666  // 3 + 4 + 1
 			}
 		};
-
 
 		frame = frame.groupby(["id_0", "id_1"]);
 		var actual = frame.mean("value");
