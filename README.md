@@ -25,7 +25,8 @@ dataset (with [`BabyParse`](https://github.com/Rich-Harris/BabyParse)) and creat
 var baby = require('babyparse'),
     Frame = require('frame');
 
-iris = baby.parseFiles('iris.csv', {"header" :true, "dynamicTyping" : true}).data;
+config = {"header" :true, "dynamicTyping" : true, "skipEmptyLines" : true};
+iris = baby.parseFiles('iris.csv', config).data;
 frame = new Frame(iris);
 ```
 ### groupby
@@ -54,6 +55,13 @@ f.mean("Sepal.Length");
 ```
 ```json
 6.58799
+```
+Get the number of rows that match the filter.
+```javascript
+f.count();
+```
+```json
+50
 ```
 
 # tests
