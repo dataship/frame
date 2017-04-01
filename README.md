@@ -1,13 +1,15 @@
 # frame
 
 a DataFrame for Javascript.
+_crunch numbers in Node or the Browser_
 
 ## features
 * Interactive performance (<100ms) on millions of rows
 * Syntax similar to SQL and Pandas
 * Compatible with `PapaParse` and [`BabyParse`](https://github.com/Rich-Harris/BabyParse)
 
-performance summary (1 million rows)
+## performance
+typical performance on one million rows
 
 operation | time
 ----------|------
@@ -54,12 +56,12 @@ f.mean("Sepal.Length");
 6.58799
 ```
 
-## tests
+# tests
 Hundreds of tests verify correctness on millions of data points (against a Pandas reference).
 
 `npm run data && npm run test`
 
-## benchmarks
+# benchmarks
 `npm run benchmark`
 
 # design goals and inspiration
