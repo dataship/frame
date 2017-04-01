@@ -105,7 +105,7 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 				var frame = new Frame(column_set);
 
 				var g = frame.groupby(id_names);
-				var actual = g.count(value_names[0]);
+				var actual = g.count();
 
 				var assert;
 				if(value_types[0] in dtest.float_types){
