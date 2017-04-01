@@ -144,8 +144,7 @@ function simpleTestCases(){
 		dtest.assert.close(t, actual, expected, "close", RTOL, ATOL);
 	});
 }
-simpleTestCases();
-/*
+
 
 var dataDirectory = 'test/data/groupby.mean/',
 	testFile = 'small.json';
@@ -173,7 +172,7 @@ floader.load(dataDirectory + testFile, function(err, config){
 		var N = test.N; // number of rows
 		var distincts = test.id.map(function(spec, i){ return spec.K; });
 
-		var testName = "groupby.sum: " + N + " x " + "(" + distincts.join(", ") + ")"
+		var testName = "groupby.mean: " + N + " x " + "(" + distincts.join(", ") + ")"
 		tape(testName, generateTestCase(directory, names, types, ["value_0"], [test.value[0].type]));
 	}
 });
@@ -223,14 +222,9 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 					var frame = new Frame(column_set, key_set);
 
 					var g = frame.groupby(id_names);
-					var actual = g.sum(value_names[0]);
+					var actual = g.mean(value_names[0]);
 
-					var assert;
-					if(value_types[0] in dtest.float_types){
-						assert = dtest.assert.tree.allclose;
-					} else {
-						assert = dtest.assert.tree.equal;
-					}
+					var assert = dtest.assert.tree.allclose;
 
 					//console.log(actual);
 					assert(t, actual, expected, null, RTOL, ATOL);
@@ -240,4 +234,3 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 		});
 	};
 }
-*/

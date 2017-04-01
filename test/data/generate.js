@@ -11,6 +11,7 @@ var spawn = require('child_process').spawn,
 var tasks = [
 	['generate.py', 'groupby.count/', 'groupby.count/small.json'],
 	['generate.py', 'groupby.sum/',   'groupby.sum/small.json'],
+	['generate.py', 'groupby.mean/',   'groupby.mean/small.json'],
 	['generate.py', 'groupby.where.sum/',   'groupby.where.sum/small.json'],
 	['generate.py', 'where.in.sum/',   'where.in.sum/small.json']
 ];
