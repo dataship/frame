@@ -147,7 +147,7 @@ function simpleTestCases(){
 simpleTestCases();
 /*
 
-var dataDirectory = 'test/data/mean/',
+var dataDirectory = 'test/data/groupby.mean/',
 	testFile = 'small.json';
 
 var floader = require('floader'),

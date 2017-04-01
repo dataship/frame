@@ -46,7 +46,7 @@ tape("groupbymulti.count", function(t){
 */
 
 
-var dataDirectory = 'test/data/count/',
+var dataDirectory = 'test/data/groupby.count/',
 	testFile = 'small.json';
 
 var RTOL = 1e-05, // 1e-05

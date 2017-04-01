@@ -112,7 +112,7 @@ function simpleTestCases(){
 var RTOL = 1e-05, // 1e-05
 	ATOL = 1e-12; // 1e-12
 
-var dataDirectory = 'test/data/sum/',
+var dataDirectory = 'test/data/groupby.sum/',
 	testFile = 'small.json';
 
 var floader = require('floader'),
