@@ -90,6 +90,46 @@ tape("where creates second filter correctly", function(t){
 	t.equals(actual.toString(), expected.toString());
 });
 
+tape("where filters column via accessor", function(t){
+	t.plan(1);
+
+	var frame = new Frame({
+		"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	//frame.where(row => row.id == 1);
+	frame = frame.where("id", v => v == 1);
+
+	var expected = [3, 1, 4, 1];
+
+
+	var actual = frame["value"];
+	t.equals(actual.toString(), expected.toString());
+});
+
+tape("where filters keyed column via accessor", function(t){
+	t.plan(1);
+
+	var columns = {
+		"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"value" : [0, 2, 2, 3, 1, 3, 4, 2, 1]
+	};
+	var keys = {
+		"value" : ["old", "fish", "new", "red", "blue"]
+	};
+
+	var frame = new Frame(columns, keys);
+
+	frame = frame.where("id", v => v == 1);
+
+	var expected = [3, 1, 4, 1];
+	var expected = ["red", "fish", "blue", "fish"];
+
+
+	var actual = frame["value"];
+	t.equals(actual.toString(), expected.toString());
+});
 
 /*
 function eq(a){
