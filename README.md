@@ -62,7 +62,7 @@ Columns can be accessed directly, and the filter is applied.
 ```javascript
 f["Species"]
 ```
-```json
+```javascript
 ["virginica", "virginica", "virginica", ..., "virginica" ]
 ```
 # tests
