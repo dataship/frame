@@ -17,8 +17,11 @@ dataset (with [`BabyParse`](https://github.com/Rich-Harris/BabyParse)) and creat
 var baby = require('babyparse'),
     Frame = require('frame');
 
+// parse the csv file
 config = {"header" :true, "dynamicTyping" : true, "skipEmptyLines" : true};
 iris = baby.parseFiles('iris.csv', config).data;
+
+// create a frame from the parsed results
 frame = new Frame(iris);
 ```
 ### groupby
