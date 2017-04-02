@@ -146,7 +146,7 @@ tape("where accepts string filter on keyed column", function(t){
 
 	frame = frame.where("id", "thoreau");
 
-	var expected = ["add", "fish", "to", "my", "fare"]
+	var expected = ["add", "fish", "to", "my", "fare"];
 
 
 	var actual = frame["value"];
