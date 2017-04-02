@@ -1,21 +1,13 @@
 # frame
 
 a DataFrame for Javascript.
+
 _crunch numbers in Node or the Browser_
 
 ## features
 * Interactive performance (<100ms) on millions of rows
 * Syntax similar to SQL and Pandas
 * Compatible with `PapaParse` and [`BabyParse`](https://github.com/Rich-Harris/BabyParse)
-
-## performance
-typical performance on one million rows
-
-operation | time
-----------|------
-`groupby` | 54ms
-`where`   | 29ms
-`sum`     | 5ms
 
 ## examples
 Parse the [Iris](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
@@ -48,7 +40,7 @@ g.mean("Sepal.Width");
 ```
 
 ### where
-Filter by `Species` value `virginica` then find the average (should match above).
+Filter by `Species` value `virginica` then find the average.
 ```javascript
 f = frame.where("Species", "virginica");
 f.mean("Sepal.Length");
@@ -71,6 +63,14 @@ Hundreds of tests verify correctness on millions of data points (against a Panda
 
 # benchmarks
 `npm run benchmark`
+
+typical performance on one million rows
+
+operation | time
+----------|------
+`groupby` | 54ms
+`where`   | 29ms
+`sum`     | 5ms
 
 # design goals and inspiration
 
