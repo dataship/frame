@@ -58,7 +58,13 @@ f.count();
 ```json
 50
 ```
-
+Columns can be accessed directly, and the filter is applied.
+```javascript
+f["Species"]
+```
+```json
+["virginica", "virginica", "virginica", ..., "virginica" ]
+```
 # tests
 Hundreds of tests verify correctness on millions of data points (against a Pandas reference).
 
