@@ -185,3 +185,21 @@ test("rename column correctly converts key", function(t){
 
 	t.equals(JSON.stringify(frame["c"]), JSON.stringify(expected));
 });
+
+test("setting via property accessor works correctly", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+	var c = [3, 4, 1, 0, 2, 1, 2, 3, 3];
+
+
+	frame["b"] = c;
+
+	var expected = c.slice(0);
+	t.equals(JSON.stringify(frame["b"]), JSON.stringify(expected));
+});
