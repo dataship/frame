@@ -197,9 +197,29 @@ test("setting via property accessor works correctly", function(t){
 	});
 	var c = [3, 4, 1, 0, 2, 1, 2, 3, 3];
 
-
 	frame["b"] = c;
 
 	var expected = c.slice(0);
 	t.equals(JSON.stringify(frame["b"]), JSON.stringify(expected));
+});
+
+test("distinct works correctly", function(t){
+	t.plan(2);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = [1, 2, 3, 4];
+	var actual = frame.distinct("b");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+	var expected = [0, 1];
+	var actual = frame.distinct("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
