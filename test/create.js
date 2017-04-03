@@ -123,3 +123,65 @@ test("Symbol.toStringTag correctly overridden", function(t){
 
 	t.equals(Object.prototype.toString.call(frame), expected);
 });
+
+test("rename column correctly modifies frame properties", function(t){
+	t.plan(2);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = ["a", "c"];
+
+	frame.rename("b", "c");
+
+	t.equals(JSON.stringify(Object.keys(frame)), JSON.stringify(expected));
+
+	var found = [];
+
+	for(name in frame){
+		found.push(name);
+	}
+
+	t.equals(JSON.stringify(found), JSON.stringify(expected));
+});
+
+test("rename column correctly adds accessor", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = b;
+
+	frame.rename("b", "c");
+
+	t.equals(JSON.stringify(frame["c"]), JSON.stringify(expected));
+});
+
+test("rename column correctly converts key", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	},
+	{
+		"b" : ["zero", "one", "two", "three", "four"]
+	});
+
+	var expected = ["one", "two", "two", "three", "one", "three", "four", "two", "one"];
+
+	frame.rename("b", "c");
+
+	t.equals(JSON.stringify(frame["c"]), JSON.stringify(expected));
+});
