@@ -71,7 +71,7 @@ Hundreds of tests verify correctness on millions of data points (against a Panda
 `npm run data && npm run test`
 
 # benchmarks
-`npm run benchmark`
+`npm run bench`
 
 typical performance on one million rows
 
