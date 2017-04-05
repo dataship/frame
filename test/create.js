@@ -302,3 +302,31 @@ test("max works correctly on ISO date strings", function(t){
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
+
+test("add creates new column", function(t){
+	t.plan(3);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+	var c = [2, 7, 2, 1, 9, 3, 2, 1, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = ["a", "b", "c"];
+
+	frame.add("c", c);
+
+	t.equals(JSON.stringify(Object.keys(frame)), JSON.stringify(expected));
+
+	var found = [];
+
+	for(name in frame){
+		found.push(name);
+	}
+
+	t.equals(JSON.stringify(found), JSON.stringify(expected));
+
+	t.equals(JSON.stringify(frame["c"]), JSON.stringify(c));
+});
