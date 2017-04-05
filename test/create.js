@@ -224,6 +224,28 @@ test("distinct works correctly", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
+test("distinct works with where", function(t){
+	t.plan(2);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = [1, 3, 4];
+	frame = frame.where("a", 1);
+	var actual = frame.distinct("b");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+	var expected = [1];
+	var actual = frame.distinct("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
 test("min works correctly", function(t){
 	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
