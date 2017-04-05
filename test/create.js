@@ -224,6 +224,24 @@ test("distinct works correctly", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
+test("distinct works with keyed column", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	}, {
+		"a" : ["zero", "one"]
+	});
+
+	var expected = ["zero", "one"];
+	var actual = frame.distinct("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
 test("distinct works with where", function(t){
 	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
