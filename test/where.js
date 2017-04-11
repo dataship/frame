@@ -175,6 +175,33 @@ tape("where accepts function with string on keyed column", function(t){
 	t.equals(actual.toString(), expected.toString());
 });
 
+tape("where filter can be modified", function(t){
+	t.plan(2);
+
+	var columns = {
+		"id"  :   [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"value" : [6, 1, 5, 3, 1, 2, 4, 0, 1]
+	};
+	var keys = {
+		"id" : ["thoreau", "seuss"],
+		"value" : ["fare", "fish", "my", "red", "blue", "to", "add"]
+	};
+
+	var frame = new Frame(columns, keys);
+
+
+	frame = frame.where("id", "thoreau");
+	var expected = ["add", "fish", "to", "my", "fare"];
+
+	var actual = frame["value"];
+	t.equals(actual.toString(), expected.toString());
+
+	frame = frame.where("id", v => v == "seuss");
+	var expected = ["red", "fish", "blue", "fish"];
+
+	var actual = frame["value"];
+	t.equals(actual.toString(), expected.toString());
+});
 /*
 function eq(a){
 	return function(v){ v == a; };
