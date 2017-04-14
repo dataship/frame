@@ -71,7 +71,7 @@ tape("successive groupby has correct index", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
-/*
+
 var dataDirectory = 'test/data/groupby.count/',
 	testFile = 'small.json';
 
@@ -124,7 +124,11 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 				}
 				var frame = new Frame(column_set);
 
-				var g = frame.groupby(id_names);
+				var g = frame;
+				for(var i = 0; i < id_names.length; i++){
+					id_name = id_names[i];
+					g = g.groupby(id_name);
+				}
 				var actual = g.count();
 
 				var assert;
@@ -140,4 +144,3 @@ function generateTestCase(directory, id_names, id_types, value_names, value_type
 		});
 	};
 }
-*/
