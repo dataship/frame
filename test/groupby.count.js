@@ -1,7 +1,7 @@
 var tape = require('tape'),
 	Frame = require('../lib/frame');
 
-/*
+
 tape("groupby.count", function(t){
 	t.plan(1);
 	var frame = new Frame({
@@ -9,7 +9,10 @@ tape("groupby.count", function(t){
 		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
 	});
 
-	var expected = [5, 4];
+	var expected = {
+		0 : 5,
+		1 : 4
+	}
 
 	var g = frame.groupby("id");
 	var actual = g.count();
@@ -18,8 +21,8 @@ tape("groupby.count", function(t){
 
 });
 
-tape("groupbymulti.count", function(t){
-	t.plan(1);
+tape("groupby.count", function(t){
+	t.plan(2);
 	var frame = new Frame({
 		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
 		"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
@@ -38,12 +41,18 @@ tape("groupbymulti.count", function(t){
 	};
 
 
-	var g = frame.groupbymulti(["id_0", "id_1"]);
-	var actual = g.countmulti();
+	var g = frame.groupby(["id_0", "id_1"]);
+	var actual = g.count();
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+
+	var g = frame.groupby("id_0", "id_1");
+	var actual = g.count();
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
-*/
+
 
 
 var dataDirectory = 'test/data/groupby.count/',
