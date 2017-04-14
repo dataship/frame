@@ -1,7 +1,7 @@
 var tape = require('tape'),
 	Frame = require('../lib/frame');
 
-tape("groupby", function(t){
+tape("groupby has correct index", function(t){
 	t.plan(1);
 	var frame = new Frame({
 		"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
@@ -20,7 +20,7 @@ tape("groupby", function(t){
 
 });
 
-tape("groupby", function(t){
+tape("groupby with two arguments has correct index", function(t){
 	t.plan(1);
 	var frame = new Frame({
 		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
@@ -40,6 +40,32 @@ tape("groupby", function(t){
 	};
 
 	var g = frame.groupby("id_0", "id_1");
+	var actual = g._index;
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
+tape("successive groupby has correct index", function(t){
+	t.plan(1);
+	var frame = new Frame({
+		"id_0"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"id_1"  : [0, 0, 1, 1, 0, 0, 1, 0, 1],
+		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	var expected = {
+		"0" : {
+			"0" : [0, 1, 5, 7],
+			"1" : [2]
+		},
+		"1" : {
+			"0" : [4],
+			"1" : [3, 6, 8]
+		}
+	};
+
+	var g = frame.groupby("id_0");
+	g = g.groupby("id_1");
 	var actual = g._index;
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
