@@ -61,6 +61,14 @@ benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
 	var result = this.group.sum("value");
 });
 
+M = 2;
+
+name = "sum: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	var result = this.group.sum("value");
+});
+
 /*
 name += " (strings)";
 

@@ -77,6 +77,17 @@ benchtap(name, {"operations" :  2*N}, createSetup(N, K, M, true), function(){
 	var result = group.sum("value");
 });
 
+M = 2;
+
+name = "groupby.sum: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations" :  2*N}, createSetup(N, K, M), function(){
+
+	//var group = this.frame.groupbymulti(["group-col0", "group-col1"]);
+	var group = this.frame.groupby(groups);
+	var result = group.sum("value");
+});
+
 K = 200;
 M = 2;
 name = "groupby.sum: " + N + "x" + K + "x" + M;
