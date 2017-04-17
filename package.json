@@ -1,6 +1,6 @@
 {
   "name": "dataship-frame",
-  "version": "0.9.2",
+  "version": "1.0.0",
   "description": "A Data Frame for Javascript. Crunch numbers in node and the browser.",
   "main": "frame.js",
   "directories": {
@@ -11,7 +11,7 @@
     "test": "browserify test/*.js | testling -x $npm_config_browser",
     "dist": "mkdir -p dist && browserify lib/frame.js -s Frame > dist/frame.js",
     "bench": "browserify benchmark/*.js | testling -x $npm_config_browser",
-    "benchmark-datavore": "browserify benchmark/datavore/*.js | testling -x $npm_config_browser"
+    "bench-datavore": "browserify benchmark/datavore/*.js | testling -x $npm_config_browser"
   },
   "repository": {
     "type": "git",
