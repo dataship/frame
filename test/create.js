@@ -304,6 +304,24 @@ test("min works correctly on ISO date strings", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
+test("min works correctly on keyed column", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+	k = ["b", "a"];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	}, {
+		"a" : k
+	});
+
+	var expected = "a";
+	var actual = frame.min("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
 
 test("max works correctly", function(t){
 	t.plan(2);
@@ -340,6 +358,25 @@ test("max works correctly on ISO date strings", function(t){
 
 	var expected = "2016-05-28";
 	var actual = frame.max("b");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
+test("max works correctly on keyed column", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
+	k = ["b", "a"];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	}, {
+		"a" : k
+	});
+
+	var expected = "b";
+	var actual = frame.max("a");
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
