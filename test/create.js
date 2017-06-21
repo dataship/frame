@@ -308,7 +308,7 @@ test("min works correctly on keyed column", function(t){
 	t.plan(1);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
 	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
-	k = ["b", "a"];
+	var k = ["b", "a"];
 
 	var frame = new Frame({
 		"a" : a,
@@ -366,7 +366,7 @@ test("max works correctly on keyed column", function(t){
 	t.plan(1);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
 	var b = [1, 2, 2, 3, 1, 3, 4, 2, 1];
-	k = ["b", "a"];
+	var k = ["b", "a"];
 
 	var frame = new Frame({
 		"a" : a,
