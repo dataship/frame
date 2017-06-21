@@ -107,6 +107,27 @@ function simpleTestCases(){
 
 		t.equals(JSON.stringify(actual), JSON.stringify(expected));
 	});
+
+	tape("groupby sum, reduce over keyed column", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id"    : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		},{
+			"value" : [1, 2, 3, 4, 5]
+		});
+
+		var expected = {
+			0 : 15, // 2 + 3 + 3 + 4 + 3
+			1 : 13 // 4 + 2 + 5 + 2
+		}
+
+		var g = frame.groupby("id");
+		var actual = g.sum("value");
+
+		t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+	});
 }
 
 var RTOL = 1e-05, // 1e-05
