@@ -323,6 +323,26 @@ test("min works correctly on keyed column", function(t){
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
+test("min works with where on keyed column", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 4, 3, 4, 2, 3];
+	var k = ["b", "a"];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	}, {
+		"a" : k
+	});
+
+	var expected = "a";
+	frame = frame.where("b", 3);
+	var actual = frame.min("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
 test("max works correctly", function(t){
 	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
@@ -376,6 +396,26 @@ test("max works correctly on keyed column", function(t){
 	});
 
 	var expected = "b";
+	var actual = frame.max("a");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
+test("max works with where on keyed column", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 4, 3, 4, 2, 3];
+	var k = ["b", "a"];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	}, {
+		"a" : k
+	});
+
+	var expected = "b";
+	frame = frame.where("b", 3);
 	var actual = frame.max("a");
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
