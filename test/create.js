@@ -263,6 +263,41 @@ test("distinct works with where", function(t){
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
+
+test("argmax works correctly", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 0, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = 6;
+	var actual = frame.argmax("b");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+});
+
+test("argmin works correctly", function(t){
+	t.plan(1);
+	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
+	var b = [1, 2, 2, 3, 1, 0, 4, 2, 1];
+
+	var frame = new Frame({
+		"a" : a,
+		"b" : b
+	});
+
+	var expected = 5;
+	var actual = frame.argmin("b");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+});
+
 test("median works correctly", function(t){
 	t.plan(2);
 	var a = [0, 0, 0, 1, 1, 0, 1, 0, 1];
