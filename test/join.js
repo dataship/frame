@@ -120,6 +120,60 @@ tape("join to larger frame produces correct sum", function(t){
 
 });
 
+tape("join with where produces correct sum", function(t){
+	t.plan(1);
+	var frame0 = new Frame({
+		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	//console.log(JSON.stringify(frame0._cols));
+	var frame1 = new Frame({
+		"value1" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+	});
+
+	var link = [9, 1, 12, 2, 3, 7, 10, 5, 11];
+
+	var joined = frame0.join(frame1, link);
+
+	var filtered = joined.where("value0", function(v){ return v > 2; });
+	var expected = 22; // 3 + 8 + 11
+
+	var actual = filtered.sum("value1");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+});
+
+tape("join with where produces correct argmax", function(t){
+	t.plan(2);
+	var frame0 = new Frame({
+		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	//console.log(JSON.stringify(frame0._cols));
+	var frame1 = new Frame({
+		"value1" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+	});
+
+	var link = [9, 1, 12, 2, 3, 7, 10, 5, 11];
+
+	var joined = frame0.join(frame1, link);
+
+	var filtered = joined.where("value0", function(v){ return v > 2; });
+	var expected = 2; // 3 + 8 + 11
+
+	var actual = filtered.argmax("value1");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+	var expected = 11;
+
+	var argmax = actual;
+	var actual = filtered["value1"][argmax];
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+});
+
 /*
 tape("groupby has correct index", function(t){
 	t.plan(1);
