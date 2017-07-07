@@ -1,8 +1,7 @@
 var tape = require('tape'),
 	Frame = require('../lib/frame');
 
-
-tape("join produces correct virtual column", function(t){
+tape("join to smaller frame produces correct virtual column", function(t){
 	t.plan(1);
 	var frame0 = new Frame({
 		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
@@ -25,7 +24,7 @@ tape("join produces correct virtual column", function(t){
 
 });
 
-tape("join produces correct sum", function(t){
+tape("join to smaller frame produces correct sum", function(t){
 	t.plan(1);
 	var frame0 = new Frame({
 		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
@@ -45,6 +44,57 @@ tape("join produces correct sum", function(t){
 
 	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 
+});
+
+tape("join to larger frame produces correct virtual column", function(t){
+	t.plan(1);
+	var frame0 = new Frame({
+		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	//console.log(JSON.stringify(frame0._cols));
+	var frame1 = new Frame({
+		"value1" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+	});
+
+	var link = [9, 1, 12, 2, 3, 7, 10, 5, 11];
+
+	var joined = frame0.join(frame1, link);
+
+	var expected = [10, 2, 13, 3, 4, 8, 11, 6, 12]; // 1 + 1 + 1 + 2 + 2 + 1 + 2 + 1 + 2
+
+	var actual = joined["value1"];
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+});
+
+tape("join to larger frame produces correct argmax and argmin", function(t){
+	t.plan(2);
+	var frame0 = new Frame({
+		"value0" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	//console.log(JSON.stringify(frame0._cols));
+	var frame1 = new Frame({
+		"value1" : [5, 2, 13, 4, 6, 1, 7, 8, 9, 10, 11, 12, 3]
+	});
+
+	var link = [9, 3, 12, 2, 1, 7, 10, 5, 11];
+
+	var joined = frame0.join(frame1, link);
+
+	var expected = 3;
+
+	var actual = joined.argmax("value1");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
+
+	var expected = 7;
+
+	var actual = joined.argmin("value1");
+
+	t.equals(JSON.stringify(actual), JSON.stringify(expected));
 });
 
 /*
