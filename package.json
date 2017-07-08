@@ -1,6 +1,6 @@
 {
   "name": "dataship-frame",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "A Data Frame for Javascript. Crunch numbers in node and the browser.",
   "main": "lib/frame.js",
   "directories": {
