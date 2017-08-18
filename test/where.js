@@ -68,6 +68,27 @@ tape("where with array argument creates correct filter", function(t){
 	t.equals(actual.toString(), expected.toString());
 });
 
+tape("where with virtual column creates correct filter", function(t){
+	t.plan(1);
+
+	var frame = new Frame({
+		"id"  : [0, 0, 0, 1, 1, 0, 1, 0, 1],
+		"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+	});
+
+	frame = frame.where(row => row.id == 1);
+
+	var expected = new BitArray(9);
+
+	expected.set(3, true);
+	expected.set(4, true);
+	expected.set(6, true);
+	expected.set(8, true);
+
+	var actual = frame._filter;
+	t.equals(actual.toString(), expected.toString());
+});
+
 tape("where creates second filter correctly", function(t){
 	t.plan(1);
 

@@ -38,6 +38,7 @@ var N = 100000,
 	K = 3,
 	M = 2;
 
+/*
 var name = "where.function: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
@@ -45,31 +46,26 @@ benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
 	var result = this.frame.where("id_0", id => id == 1);
 });
 
-/*
-name += " (strings)";
-
-benchtap(name, {"operations": N}, createSetup(N, K, true), function(){
-	var result = this.group.reduce("reduce-col");
-});
 */
 
-
 var N = 1000000;
-
+/*
 name = "where.function: " + N + "x" + K + "x" + M;
 
 benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
 	//var result = this.frame.where(row => row["id_0"] == 1);
 	var result = this.frame.where("id_0", id => id == 1);
 });
+*/
+
+name = "where.virtual: " + N + "x" + K + "x" + M;
+
+benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
+	//var result = this.frame.where(row => row["id_0"] == 1);
+	var result = this.frame.where(row => row.id_0 == 1);
+});
 
 /*
-name += " (strings)";
-
-benchtap(name, {"operations": N}, createSetup(N, K, true), function(){
-	var result = this.group.reduce("reduce-col");
-});
-*/
 
 N = 1000000;
 K = 200;
@@ -88,3 +84,4 @@ benchtap(name, {"operations": N}, createSetup(N, K, M), function(){
 	//var result = this.frame.where(row => row["id_0"] == 1);
 	var result = this.frame.where("id_0", [0, 1, 3, 10, 12, 18, 101, 52, 23, 18, 7, 12, 154, 34, 117, 5]);
 });
+*/
