@@ -78,6 +78,22 @@ function simpleTestCases(){
 
 		t.equals(actual, expected);
 	});
+
+
+	tape("sum works with where in undefined", function(t){
+		t.plan(1);
+		var frame = new Frame({
+			"id"  :   [0, 2, 0, 1, 1, 0, 2, 0, 1],
+			"value" : [1, 2, 2, 3, 1, 3, 4, 2, 1]
+		});
+
+		var a; // undefined
+		var expected = 14; // 1 + 2 + 2 + 3 + 4 + 2
+		frame = frame.where("id", [0, 2, a]);
+		var actual = frame.sum("value");
+
+		t.equals(actual, expected);
+	});
 }
 
 //simpleTestCases();
